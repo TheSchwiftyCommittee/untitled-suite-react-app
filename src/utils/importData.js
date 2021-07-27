@@ -1,4 +1,4 @@
-import {USuiteApi, USuiteGet} from "../api/USuiteApi";
+import {USuiteApi} from "../api/USuiteApi";
 
 const importData = async (path) => {
   try {

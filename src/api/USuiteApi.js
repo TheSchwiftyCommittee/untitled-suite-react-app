@@ -7,12 +7,7 @@ const USuiteApi = axios.create({
   },
 });
 
-const USuiteGet = (path) => {
-  USuiteApi.get(path);
-};
-
 // export default USuiteGet;
 module.exports = {
   USuiteApi,
-  USuiteGet
 }
