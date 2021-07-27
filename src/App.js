@@ -6,9 +6,9 @@ function App() {
   const [data, setData] = useState(null)
 
   const getData = async () => {
-    let lists = await importData("/lists");
-    let title = await lists[0].title
-    setData(title)
+    let listData = await importData("/lists");
+    let listArray = await listData
+    setData(listArray)
   }
 
   useEffect(() => {
@@ -18,7 +18,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>{data && data}</p>
+        {data && data.map((list) => (
+          <ul key={list.id}>
+            <li>{list.title}</li>
+            <li>{list.description}</li>
+          </ul>
+        ))}
       </header>
       <p>
         Edit <code>src/App.js</code> and save to reload.
