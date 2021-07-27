@@ -1,23 +1,33 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import importData from './utils/importData';
 
 function App() {
+  const [data, setData] = useState(null)
+
+  const getData = async () => {
+    let listData = await importData("/lists");
+    let listArray = await listData
+    setData(listArray)
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {data && data.map((list) => (
+          <ul key={list.id}>
+            <li>{list.title}</li>
+            <li>{list.description}</li>
+          </ul>
+        ))}
       </header>
+      <p>
+        Edit <code>src/App.js</code> and save to reload.
+      </p>
     </div>
   );
 }
