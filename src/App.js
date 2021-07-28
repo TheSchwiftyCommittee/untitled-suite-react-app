@@ -1,5 +1,15 @@
 import { useEffect, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
 import './App.css';
+import { Home } from './components/Home';
+import { LogIn } from './components/LogIn';
+import { Navbar } from './components/Navbar';
+import { SignUp } from './components/SignUp';
 import importData from './utils/importData';
 
 function App() {
@@ -17,17 +27,22 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        {data && data.map((list) => (
-          <ul key={list.id}>
-            <li>{list.title}</li>
-            <li>{list.description}</li>
-          </ul>
-        ))}
-      </header>
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
+        <Router>
+          <Navbar />
+          <body className="App-header">
+            <Switch>
+              <Route exact path="/signup">
+                <SignUp />
+              </Route>
+              <Route exact path="/login">
+                <LogIn />
+              </Route>
+              <Route path="/">
+                <Home data={data} />
+              </Route>
+            </Switch>
+          </body>
+        </Router>
     </div>
   );
 }
