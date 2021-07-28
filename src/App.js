@@ -7,13 +7,15 @@ import {
 
 import './App.css';
 import { Home } from './components/Home';
-import { LogIn } from './components/LogIn';
+import { SignIn } from './components/SignIn';
 import { Navbar } from './components/Navbar';
 import { SignUp } from './components/SignUp';
 import importData from './utils/importData';
 
 function App() {
   const [data, setData] = useState(null)
+  const [admin, setAdmin] = useState(false)
+  const [user, setUser] = useState(false)
 
   const getData = async () => {
     let listData = await importData("/lists");
@@ -28,14 +30,14 @@ function App() {
   return (
     <div className="App">
         <Router>
-          <Navbar />
+          <Navbar admin={admin} user={user}/>
           <body className="App-header">
             <Switch>
               <Route exact path="/signup">
                 <SignUp />
               </Route>
-              <Route exact path="/login">
-                <LogIn />
+              <Route exact path="/signin">
+                <SignIn />
               </Route>
               <Route path="/">
                 <Home data={data} />

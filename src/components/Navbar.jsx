@@ -1,7 +1,9 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
-export const Navbar = () => {
+export const Navbar = (props) => {
+
+  const {admin, user} = props
 
   return (
     <>
@@ -9,23 +11,37 @@ export const Navbar = () => {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <NavLink to="/" style={{color: "white"}}>Home</NavLink>
             </li>
             <li>
-              <Link to="#">Tasker</Link>
+              <NavLink to="#" style={{color: "white"}}>Tasker</NavLink>
             </li>
             <li>
-              <Link to="#">Calendar</Link>
+              <NavLink to="#" style={{color: "white"}}>Calendar</NavLink>
             </li>
             <li>
-              <Link to="#">Pricing</Link>
+              <NavLink to="#" style={{color: "white"}}>Pricing</NavLink>
             </li>
-            <li>
-              <Link to="/signup">Sign Up</Link>
-            </li>
-            <li>
-              <Link to="/login">Log In</Link>
-            </li>
+            {admin && 
+              <li>
+                <NavLink to="#" style={{color: "white"}}>Users</NavLink>
+              </li>
+            }
+            {!user &&
+              <div>
+                <li>
+                  <NavLink to="/signup" style={{color: "white"}}>Sign Up</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/signin" style={{color: "white"}}>Sign In</NavLink>
+                </li>
+              </div>
+            }
+            {user &&
+              <li>
+              <NavLink to="/" style={{color: "white"}}>Sign Out</NavLink>
+              </li>
+            }
           </ul>
         </nav>
       </header>
