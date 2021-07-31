@@ -31,19 +31,19 @@ function App() {
     <div className="App">
         <Router>
           <Navbar admin={admin} user={user}/>
-          <body className="App-header">
+          <div className="App-header">
             <Switch>
-              <Route exact path="/signup">
+              <Route path="/signup">
                 <SignUp />
               </Route>
-              <Route exact path="/signin">
+              <Route path="/signin">
                 <SignIn />
               </Route>
-              <Route path="/">
+              <Route exact path="/">
                 <Home data={data} />
               </Route>
             </Switch>
-          </body>
+          </div>
         </Router>
     </div>
   );
