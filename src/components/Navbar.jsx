@@ -2,8 +2,12 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 
 export const Navbar = (props) => {
+  const { admin, setAdmin, user, setUser } = props
 
-  const {admin, user} = props
+  const handleLogoutClick = () => {
+    setUser(false)
+    setAdmin(false)
+  }
 
   return (
     <>
@@ -38,9 +42,7 @@ export const Navbar = (props) => {
               </div>
             }
             {user &&
-              <li>
-              <NavLink to="/" style={{color: "white"}}>Sign Out</NavLink>
-              </li>
+              <button onClick={handleLogoutClick} >Sign Out</button>
             }
           </ul>
         </nav>

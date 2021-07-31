@@ -2,10 +2,10 @@ const axios = require("axios");
 
 const setApiUrl = () => {
   if (process.env.NODE_ENV === "production") {
-    return "https://untitled-suite-api.herokuapp.com/api"
+    return "https://untitled-suite-api.herokuapp.com"
   }
   if (process.env.NODE_ENV === "development") {
-    return "http://localhost:4000/api"
+    return "http://localhost:4000"
   }
 }
 const apiUrl = setApiUrl()

@@ -3,8 +3,10 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { USuiteApi } from "../api/USuiteApi";
 
-export const SignIn = () => {
-  const [email, setEmail] = useState("")
+export const SignIn = (props) => {
+  const { setAdmin, setUser } = props
+
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
@@ -17,13 +19,22 @@ export const SignIn = () => {
     setErrorMessage("")
 
     try {
-      const { data } = await USuiteApi.post("/users/sign_in", {
-        email,
-        password,
+      const { data } = await USuiteApi.post("/users/login", {
+        username,
+        password
       })
       localStorage.setItem('jwt', data.jwt)
-      history.push("/")
+
+      if (data.user.admin === true) {
+        setAdmin(true)
+      }
+      setUser(true)
       setLoading(false)
+
+      setTimeout(() => {
+        history.push("/")
+      }, 2000);
+      
     } catch (error) {
       setErrorMessage(error.message)
       setLoading(false)
@@ -37,8 +48,8 @@ export const SignIn = () => {
       {loading && <h2>Loading ... </h2> }
       <form onSubmit={signIn}>
         <label>
-          Email:
-          <input type="text" placeholder="Enter Email" onChange={(e) => setEmail(e.target.value)} value={email} />
+          Username:
+          <input type="text" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} value={username} />
         </label>
         <label>
           Password:

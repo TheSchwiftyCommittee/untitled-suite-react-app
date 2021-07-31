@@ -30,14 +30,14 @@ function App() {
   return (
     <div className="App">
         <Router>
-          <Navbar admin={admin} user={user}/>
+          <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
           <div className="App-header">
             <Switch>
               <Route path="/signup">
                 <SignUp />
               </Route>
               <Route path="/signin">
-                <SignIn />
+                <SignIn setAdmin={setAdmin} setUser={setUser}/>
               </Route>
               <Route exact path="/">
                 <Home data={data} />
