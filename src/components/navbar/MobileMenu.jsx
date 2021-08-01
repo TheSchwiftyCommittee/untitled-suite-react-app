@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Hamburger = (props) => {
+export const MobileMenu = (props) => {
   const {admin, user, handleLogoutClick} = props
 
   const classes = useStyles();
@@ -100,11 +102,11 @@ export const Hamburger = (props) => {
   );
 
   return (
-    <div>
+    <Box>
       <Button onClick={toggleDrawer('left', true)} ><MenuIcon /></Button>
       <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
         {list('left')}
       </Drawer>
-    </div>
+    </Box>
   );
 }
