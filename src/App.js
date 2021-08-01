@@ -40,7 +40,7 @@ function App() {
                 <SignIn setAdmin={setAdmin} setUser={setUser} />
               </Route>
               <Route exact path="/">
-                <Home />
+                <Home user={user} setUser={setUser} />
               </Route>
             </Switch>
           </div>
