@@ -53,7 +53,7 @@ export const SignIn = (props) => {
         </label>
         <label>
           Password:
-          <input type="text" name="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} value={password}/>
+          <input type="password" name="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} value={password}/>
         </label>
         <input type="submit" value="Sign In" />
         <Link to="/signup" style={{ color: "white", textDecoration: "none" }}>
