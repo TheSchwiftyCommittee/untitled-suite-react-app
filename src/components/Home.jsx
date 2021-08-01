@@ -1,7 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom'
 
-export const Home = (props) => {
-  const {data} = props
+export const Home = () => {
 
   return (
     <>
@@ -10,12 +10,14 @@ export const Home = (props) => {
         <h2>Lorem ipsum dolor sit amet.</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, impedit commodi ea, est quas asperiores nam quisquam, ipsam tempora modi voluptates sit quibusdam tenetur maiores. Sapiente consequatur sequi fuga doloribus rerum! Laudantium ipsum ipsam nostrum voluptatibus temporibus, quae culpa dolorem, pariatur nesciunt quos asperiores explicabo quidem ad ducimus. Cumque, veniam.</p>
         
-        {data && data.map((list) => (
-          <ul key={list.id}>
-            <li>{list.title}</li>
-            <li>{list.description}</li>
-          </ul>
-        ))}
+        <div>
+          <li>
+            <NavLink to="/signup" style={{color: "white"}}>Sign Up</NavLink>
+          </li>
+          <li>
+            <NavLink to="/signin" style={{color: "white"}}>Sign In</NavLink>
+          </li>
+        </div>
       </div>
     </>
   )
