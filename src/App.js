@@ -4,13 +4,25 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import './App.css';
 import { Home } from './components/Home';
 import { SignIn } from './components/SignIn';
-import { Navbar } from './components/Navbar';
+import { Navbar } from './components/navbar/Navbar';
 import { SignUp } from './components/SignUp';
 // import importData from './utils/importData';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#eff0f3"
+    },
+    secondary: {
+      main: "#ff8e3c"
+    }
+  }
+})
 
 function App() {
   // const [data, setData] = useState(null)
@@ -29,6 +41,7 @@ function App() {
 
   return (
     <div className="App">
+      <ThemeProvider theme={theme}>
         <Router>
           <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
           <div className="App-header">
@@ -45,6 +58,7 @@ function App() {
             </Switch>
           </div>
         </Router>
+      </ThemeProvider>
     </div>
   );
 }

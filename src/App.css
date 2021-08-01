@@ -1,8 +1,12 @@
 .App {
   text-align: center;
   min-height: 100vh;
-  background-color: #282c34;
-  color: white;
+  background: rgb(255,142,60);
+  background: -moz-linear-gradient(135deg, rgba(255,142,60,1) 30%, rgba(0,0,0,1) 100%);
+  background: -webkit-linear-gradient(135deg, rgba(255,142,60,1) 30%, rgba(0,0,0,1) 100%);
+  background: linear-gradient(135deg, rgba(255,142,60,1) 30%, rgba(0,0,0,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff8e3c",endColorstr="#000000",GradientType=1);
+  color: black;
 }
 
 .App-header {

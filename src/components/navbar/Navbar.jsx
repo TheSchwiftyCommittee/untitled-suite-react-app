@@ -1,8 +1,23 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { AppBar, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { Hamburger } from './Hamburger';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 export const Navbar = (props) => {
   const { admin, setAdmin, user, setUser } = props
+  const classes = useStyles();
 
   const handleLogoutClick = () => {
     setUser(false)
@@ -11,6 +26,14 @@ export const Navbar = (props) => {
 
   return (
     <>
+      <AppBar position="static">
+        <Toolbar>
+          <Hamburger admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>
+          <Typography variant="h6" className={classes.title}>
+            {'<Untitled Suite/>'}
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <header className="App-header">
         <nav>
           <ul>
@@ -26,20 +49,20 @@ export const Navbar = (props) => {
             <li>
               <NavLink to="#" style={{color: "white"}}>Pricing</NavLink>
             </li>
-            {admin && 
+            {admin &&
               <li>
                 <NavLink to="#" style={{color: "white"}}>Users</NavLink>
               </li>
             }
             {!user &&
-              <div>
+              <>
                 <li>
                   <NavLink to="/signup" style={{color: "white"}}>Sign Up</NavLink>
                 </li>
                 <li>
                   <NavLink to="/signin" style={{color: "white"}}>Sign In</NavLink>
                 </li>
-              </div>
+              </>
             }
             {user &&
               <button onClick={handleLogoutClick} >Sign Out</button>
