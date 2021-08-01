@@ -1,4 +1,5 @@
 import React from 'react';
+import { useViewport } from '../viewport/ViewportProvider';
 import { NavLink } from "react-router-dom";
 import { AppBar, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import { Hamburger } from './Hamburger';
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Navbar = (props) => {
+  const { width } = useViewport();
+  const breakpoint = 640;
+
   const { admin, setAdmin, user, setUser } = props
   const classes = useStyles();
 
@@ -28,7 +32,7 @@ export const Navbar = (props) => {
     <>
       <AppBar position="static">
         <Toolbar>
-          <Hamburger admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>
+          {width < breakpoint && <Hamburger admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}
           <Typography variant="h6" className={classes.title}>
             {'<Untitled Suite/>'}
           </Typography>
