@@ -34,10 +34,10 @@ function App() {
           <div className="App-header">
             <Switch>
               <Route path="/signup">
-                <SignUp />
+                <SignUp setAdmin={setAdmin} setUser={setUser} />
               </Route>
               <Route path="/signin">
-                <SignIn setAdmin={setAdmin} setUser={setUser}/>
+                <SignIn setAdmin={setAdmin} setUser={setUser} />
               </Route>
               <Route exact path="/">
                 <Home data={data} />

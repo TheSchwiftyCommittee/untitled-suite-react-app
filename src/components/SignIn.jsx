@@ -9,21 +9,21 @@ export const SignIn = (props) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+  const [loginErrors, setLoginErrors] = useState("")
 
   const history = useHistory()
 
   const signIn = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setErrorMessage("")
+    setLoginErrors("")
 
     try {
       const { data } = await USuiteApi.post("/users/login", {
         username,
         password
       })
-      localStorage.setItem('jwt', data.jwt)
+      localStorage.setItem('jwt', data.token)
 
       if (data.user.admin === true) {
         setAdmin(true)
@@ -36,7 +36,7 @@ export const SignIn = (props) => {
       }, 2000);
       
     } catch (error) {
-      setErrorMessage(error.message)
+      setLoginErrors(error.message)
       setLoading(false)
     }
   }
@@ -44,7 +44,7 @@ export const SignIn = (props) => {
   return (
     <div>
       <h1>Sign In</h1>
-      {errorMessage && <div style={{ color: "red"}} >{errorMessage}</div>}
+      {loginErrors && <div style={{ color: "red"}} >{loginErrors}</div>}
       {loading && <h2>Loading ... </h2> }
       <form onSubmit={signIn}>
         <label>
