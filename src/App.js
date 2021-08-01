@@ -1,34 +1,60 @@
 import { useEffect, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import { createTheme, ThemeProvider } from "@material-ui/core";
+
 import './App.css';
-import importData from './utils/importData';
+import { Home } from './components/Home';
+import { SignIn } from './components/SignIn';
+import { Navbar } from './components/navbar/Navbar';
+import { SignUp } from './components/SignUp';
+import { ViewportProvider } from './components/viewport/ViewportProvider';
+// import importData from './utils/importData';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#eff0f3"
+    },
+    secondary: {
+      main: "#ff8e3c"
+    }
+  }
+})
 
 function App() {
-  const [data, setData] = useState(null)
-
-  const getData = async () => {
-    let listData = await importData("/lists");
-    let listArray = await listData
-    setData(listArray)
-  }
+  const [admin, setAdmin] = useState(false)
+  const [user, setUser] = useState(false)
 
   useEffect(() => {
-    getData()
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {data && data.map((list) => (
-          <ul key={list.id}>
-            <li>{list.title}</li>
-            <li>{list.description}</li>
-          </ul>
-        ))}
-      </header>
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-    </div>
+    <ViewportProvider>
+      <div className="App">
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
+            <div className="App-header">
+              <Switch>
+                <Route path="/signup">
+                  <SignUp setAdmin={setAdmin} setUser={setUser} />
+                </Route>
+                <Route path="/signin">
+                  <SignIn setAdmin={setAdmin} setUser={setUser} />
+                </Route>
+                <Route exact path="/">
+                  <Home user={user} setUser={setUser} />
+                </Route>
+              </Switch>
+            </div>
+          </Router>
+        </ThemeProvider>
+      </div>
+    </ViewportProvider>
   );
 }
 
