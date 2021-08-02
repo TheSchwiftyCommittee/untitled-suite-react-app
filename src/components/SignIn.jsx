@@ -40,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: '1rem 0rem',
   },
+  btncontainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
+  },
   btn: {
     marginTop: '1rem',
   },
@@ -138,7 +146,7 @@ export const SignIn = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid item>
+          <Grid container className={classes.btncontainer}>
             <Grid item >
               <Button className={classes.btn} type="submit" variant="contained" color="secondary" >Sign In</Button>
             </Grid>

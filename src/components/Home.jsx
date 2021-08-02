@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '70ch',
     padding: '1rem',
   },
-  container: {
+  btncontainer: {
     margin: '1rem 0rem',
     display: 'flex',
     flexDirection: 'column',
@@ -55,7 +55,7 @@ export const Home = (props) => {
       <Typography variant="body1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, impedit commodi ea, est quas asperiores nam quisquam, ipsam tempora modi voluptates sit quibusdam tenetur maiores. Sapiente consequatur sequi fuga doloribus rerum! Laudantium ipsum ipsam nostrum voluptatibus temporibus, quae culpa dolorem, pariatur nesciunt quos asperiores explicabo quidem ad ducimus. Cumque, veniam.</Typography>
     
       {!user &&
-        <Grid container className={classes.container}>
+        <Grid container className={classes.btncontainer}>
           <Grid item sm={6}>
             <Button className={classes.btn} variant="contained" color="secondary" size="large" component={NavLink} to="/signup">Sign Up</Button>
           </Grid>
