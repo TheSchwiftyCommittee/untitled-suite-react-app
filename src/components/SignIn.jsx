@@ -37,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    margin: '1rem 0rem',
   },
   btn: {
     marginTop: '1rem',
-    marginBottom: '1rem',
   },
 }));
 
