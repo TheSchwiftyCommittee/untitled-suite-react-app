@@ -27,7 +27,9 @@ export const DesktopMenu = (props) => {
           </div>
         }
         {user &&
-          <Button component={NavLink} to="/" onClick={handleLogoutClick}>Sign Out</Button>
+          <div>
+            <Button component={NavLink} to="/" onClick={handleLogoutClick}>Sign Out</Button>
+          </div>
         }
       </ButtonGroup>
     </>
