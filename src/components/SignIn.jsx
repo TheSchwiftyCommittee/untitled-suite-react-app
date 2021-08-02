@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: '70%',
-    maxWidth: '70ch'
+    maxWidth: '70ch',
+    padding: '1rem',
   },
   container: {
     display: 'flex',
