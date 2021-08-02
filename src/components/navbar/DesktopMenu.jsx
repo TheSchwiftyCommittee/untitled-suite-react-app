@@ -1,20 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Button, ButtonGroup, makeStyles } from '@material-ui/core'
-import Box from '@material-ui/core/Box';
-
-const useStyles = makeStyles({
-  features: {
-    
-  },
-  signOn: {
-
-  },
-})
+import { Button, ButtonGroup } from '@material-ui/core'
 
 export const DesktopMenu = (props) => {
-  const classes = useStyles()
   const { admin, user, handleLogoutClick } = props
 
   return (
