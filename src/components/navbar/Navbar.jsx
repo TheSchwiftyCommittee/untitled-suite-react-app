@@ -1,7 +1,8 @@
 import React from 'react';
-import { useViewport } from '../viewport/ViewportProvider';
 import { NavLink } from "react-router-dom";
-import { AppBar, Box, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Box, makeStyles, Paper, Toolbar, Typography } from '@material-ui/core';
+
+import { useViewport } from '../viewport/ViewportProvider';
 import { MobileMenu } from './MobileMenu';
 import { DesktopMenu } from './DesktopMenu';
 
@@ -17,7 +18,7 @@ const useStyles = makeStyles(() => ({
 
 export const Navbar = (props) => {
   const { width } = useViewport();
-  const breakpoint = 640;
+  const breakpoint = 600;
 
   const { admin, setAdmin, user, setUser } = props
   const classes = useStyles();
@@ -29,6 +30,7 @@ export const Navbar = (props) => {
 
   return (
     <>
+    <Paper>
       <AppBar position="static">
         <Toolbar>
           <Box display="flex" flexGrow="1" justifyContent="space-between" m={1} p={1}>
@@ -40,6 +42,7 @@ export const Navbar = (props) => {
           </Box>
         </Toolbar>
       </AppBar>
+    </Paper>
     </>
   )
 }
