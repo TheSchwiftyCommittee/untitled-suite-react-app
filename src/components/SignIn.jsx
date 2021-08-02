@@ -137,7 +137,7 @@ export const SignIn = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid item spacing={6}>
+          <Grid item>
             <Grid item >
               <Button className={classes.btn} type="submit" variant="contained" color="secondary" >Sign In</Button>
             </Grid>
