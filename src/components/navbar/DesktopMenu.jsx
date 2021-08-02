@@ -2,6 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup } from '@material-ui/core'
+import { AccessButtons } from './AccessButtons'
+import { TopMenuBar } from './TopMenuBar'
 
 export const DesktopMenu = (props) => {
   const { admin, user, handleLogoutClick } = props
@@ -9,23 +11,14 @@ export const DesktopMenu = (props) => {
   return (
     <>
       <ButtonGroup color="inherit" aria-label="outlined primary button group">
-        <div>
-          <Button component={NavLink} to="#">Tasker</Button>
-          <Button component={NavLink} to="#">Calendar</Button>
-          <Button component={NavLink} to="#">Pricing</Button>
-          {admin &&
-            <Button component={NavLink} to="#">Users</Button>
-          }
-        </div>
+        <TopMenuBar />
+        {admin &&
+          <Button component={NavLink} to="#">Users</Button>
+        }
       </ButtonGroup>
 
       <ButtonGroup color="inherit" aria-label="outlined primary button group">
-        {!user &&
-          <div>
-            <Button component={NavLink} to="/signup">Sign Up</Button>
-            <Button component={NavLink} to="/signin">Sign In</Button>
-          </div>
-        }
+        {!user && <AccessButtons />}
         {user &&
           <div>
             <Button component={NavLink} to="/" onClick={handleLogoutClick}>Sign Out</Button>
