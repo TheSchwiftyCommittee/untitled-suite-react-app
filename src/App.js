@@ -7,12 +7,12 @@ import {
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import './App.css';
-import { Home } from './components/Home';
+import { Home } from './pages/Home';
 import { SignIn } from './components/SignIn';
 import { Navbar } from './components/navbar/Navbar';
 import { SignUp } from './components/SignUp';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
-import { TaskerDashboard } from './components/tasker/TaskerDashboard';
+import { TaskerDashboard } from './pages/TaskerDashboard';
 // import importData from './utils/importData';
 
 const theme = createTheme({
