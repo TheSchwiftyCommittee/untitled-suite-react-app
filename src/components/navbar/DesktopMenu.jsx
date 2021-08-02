@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup } from '@material-ui/core'
-import { AccessButtons } from './AccessButtons'
+import { AccessButtons } from './NavAccessButtons'
 import { TopMenuBar } from './TopMenuBar'
 
 export const DesktopMenu = (props) => {

@@ -40,13 +40,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Home = (props) => {
-  const { user, setUser } = props
+  const { user } = props
 
   const classes = useStyles();
-
-  const handleLogoutClick = () => {
-    setUser(false)
-  }
 
   return (
     <Paper className={classes.paper} elevation={5}>
@@ -63,9 +59,6 @@ export const Home = (props) => {
             <Button className={classes.btn} variant="contained" color="secondary" size="large" component={NavLink} to="/signin">Sign In</Button>
           </Grid>
         </Grid>
-      }
-      {user &&
-        <button onClick={handleLogoutClick} >Sign Out</button>
       }
     </Paper>
   )
