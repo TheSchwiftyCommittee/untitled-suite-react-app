@@ -12,6 +12,7 @@ import { SignIn } from './components/SignIn';
 import { Navbar } from './components/navbar/Navbar';
 import { SignUp } from './components/SignUp';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
+import { TaskerDashboard } from './components/tasker/TaskerDashboard';
 // import importData from './utils/importData';
 
 const theme = createTheme({
@@ -45,6 +46,9 @@ function App() {
                 </Route>
                 <Route path="/signin">
                   <SignIn setAdmin={setAdmin} setUser={setUser} />
+                </Route>
+                <Route path="/tasker">
+                  <TaskerDashboard user={user} />
                 </Route>
                 <Route exact path="/">
                   <Home user={user} setUser={setUser} />

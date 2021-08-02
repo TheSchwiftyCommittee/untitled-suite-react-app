@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 export const TopMenuBar = () => {
   return (
     <>
-      <Button component={NavLink} to="#">Tasker</Button>
+      <Button component={NavLink} to="/tasker">Tasker</Button>
       <Button component={NavLink} to="#">Calendar</Button>
       <Button component={NavLink} to="#">Pricing</Button>
     </>
