@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     width: '25ch',
   },
   paper: {
-    width: '70%',
-    maxWidth: '70ch',
+    width: '80%',
+    maxWidth: '100ch',
     padding: '1rem',
   },
   btncontainer: {
@@ -50,7 +50,7 @@ export const Home = (props) => {
 
   return (
     <Paper className={classes.paper} elevation={5}>
-      <Typography variant="h3" component="h1" gutterBottom>Untitled Suite</Typography>
+      <Typography variant="h3" component="h1" gutterBottom>{"<Untitled Suite/>"}</Typography>
       <Typography variant="h4" component="h2" gutterBottom>Lorem ipsum dolor sit amet.</Typography>
       <Typography variant="body1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, impedit commodi ea, est quas asperiores nam quisquam, ipsam tempora modi voluptates sit quibusdam tenetur maiores. Sapiente consequatur sequi fuga doloribus rerum! Laudantium ipsum ipsam nostrum voluptatibus temporibus, quae culpa dolorem, pariatur nesciunt quos asperiores explicabo quidem ad ducimus. Cumque, veniam.</Typography>
     

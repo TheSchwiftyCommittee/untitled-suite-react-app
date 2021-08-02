@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     width: '25ch',
   },
   paper: {
-    width: '70%',
+    width: '80%',
     maxWidth: '70ch',
     padding: '1rem',
   },
