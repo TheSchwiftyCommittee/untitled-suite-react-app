@@ -3,15 +3,52 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { USuiteApi } from "../api/USuiteApi";
 
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    width: '25ch',
+  },
+}));
+
 export const SignIn = (props) => {
   const { setAdmin, setUser } = props
-
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [loginErrors, setLoginErrors] = useState("")
-
   const history = useHistory()
+
+  const classes = useStyles();
+  const [values, setValues] = useState({
+    username: '',
+    password: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
 
   const signIn = async (e) => {
     e.preventDefault()
@@ -20,8 +57,8 @@ export const SignIn = (props) => {
 
     try {
       const { data } = await USuiteApi.post("/users/login", {
-        username,
-        password
+        "username": values.username,
+        "password": values.password
       })
       localStorage.setItem('jwt', data.token)
 
@@ -36,7 +73,7 @@ export const SignIn = (props) => {
       }, 2000);
       
     } catch (error) {
-      setLoginErrors(error.message)
+      setLoginErrors(error.error)
       setLoading(false)
     }
   }
@@ -46,15 +83,38 @@ export const SignIn = (props) => {
       <h1>Sign In</h1>
       {loginErrors && <div style={{ color: "red"}} >{loginErrors}</div>}
       {loading && <h2>Loading ... </h2> }
-      <form onSubmit={signIn}>
-        <label>
-          Username:
-          <input type="text" placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} value={username} />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} value={password}/>
-        </label>
+      <form onSubmit={signIn} autoComplete="off">
+       <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
+          <InputLabel required htmlFor="filled-adornment-username">Username</InputLabel>
+          <FilledInput
+            required
+            id="filled-adornment-username"
+            type='text'
+            value={values.username}
+            onChange={handleChange('username')}
+          />
+        </FormControl>
+        <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
+          <InputLabel required htmlFor="filled-adornment-password">Password</InputLabel>
+          <FilledInput
+            required
+            id="filled-adornment-password"
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
         <input type="submit" value="Sign In" />
         <Link to="/signup" style={{ color: "white", textDecoration: "none" }}>
           <input type="button" value="Sign Up" />

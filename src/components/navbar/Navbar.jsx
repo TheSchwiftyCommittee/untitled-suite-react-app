@@ -31,15 +31,13 @@ export const Navbar = (props) => {
     <>
       <AppBar position="static">
         <Toolbar>
-          {width < breakpoint && <MobileMenu admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}
-          <Typography variant="h6" className={classes.title} component={NavLink} to="/">
-            {'<Untitled Suite/>'}
-          </Typography>
-          {width > breakpoint && 
-            <Box display="flex" flexGrow="1" justifyContent="flex-end" m={1} p={1}>
-              <DesktopMenu admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>
-            </Box>
-          }     
+          <Box display="flex" flexGrow="1" justifyContent="space-between" m={1} p={1}>
+            {width < breakpoint && <MobileMenu admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}
+            <Typography variant="h6" className={classes.title} component={NavLink} to="/">
+              {'<Untitled Suite/>'}
+            </Typography>
+            {width > breakpoint && <DesktopMenu admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}     
+          </Box>
         </Toolbar>
       </AppBar>
     </>
