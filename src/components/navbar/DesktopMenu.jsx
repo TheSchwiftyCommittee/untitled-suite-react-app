@@ -11,10 +11,7 @@ export const DesktopMenu = (props) => {
   return (
     <>
       <ButtonGroup color="inherit" aria-label="outlined primary button group">
-        <TopMenuBar />
-        {admin &&
-          <Button component={NavLink} to="#">Users</Button>
-        }
+        <TopMenuBar admin={admin}/>
       </ButtonGroup>
 
       <ButtonGroup color="inherit" aria-label="outlined primary button group">
