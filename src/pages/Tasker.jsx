@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import { ListCard } from "../components/card/ListCard";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,8 +103,8 @@ const Tasker = () => {
             Lists
           </Typography>
         </Grid>
-        <Grid item>
-          
+        <Grid item xs={12}>
+          <ListCard />
         </Grid>
         <Grid item>
           <Button>Add New List</Button>

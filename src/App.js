@@ -51,9 +51,7 @@ function App() {
                 <Route path="/signin">
                   <SignIn setAdmin={setAdmin} setUser={setUser} />
                 </Route>
-                <Route path="/tasker">
-                  <Tasker />
-                </Route>
+                <Route path="/tasker"><Tasker /></Route>
                 {/* <ProtectedRoute path="/tasker" component={Tasker} user={user} /> */}
                 <Route exact path="/">
                   <Home user={user} setUser={setUser} />
