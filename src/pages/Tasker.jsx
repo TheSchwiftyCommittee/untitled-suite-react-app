@@ -3,27 +3,18 @@ import { withRouter } from "react-router-dom";
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { ListCard } from "../components/card/ListCard";
+import { AddNewCard } from "../components/card/AddNewCard";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-  textField: {
-    width: "25ch",
   },
   paper: {
     width: "80%",
@@ -41,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1rem',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
       width: 'auto',
     },
   },
@@ -104,8 +94,11 @@ const Tasker = () => {
         <Grid item xs={12} md={6}>
           <ListCard />
         </Grid>
-        <Grid item>
-          <Button>Add New List</Button>
+        <Grid item xs={12} md={6}>
+          <ListCard />
+        </Grid>
+        <Grid item xs={12}>
+          <AddNewCard />
         </Grid>
       </Grid>
     </Paper>

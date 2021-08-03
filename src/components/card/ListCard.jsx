@@ -6,7 +6,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 600,
   },
   avatar: {
     backgroundColor: "red",
@@ -33,6 +32,7 @@ export const ListCard = () => {
           </IconButton>
         }
         title="Work"
+        titleTypographyProps={{variant: "h6"}}
         subheader="1 task"
         className={classes.heading}
       />
