@@ -99,7 +99,8 @@ export const SignUp = (props) => {
         history.push("/tasker")
       }, 2000);
     } catch (error) {
-      setRegistrationErrors(error.message)
+      setRegistrationErrors(error.response.data.error)
+      // console.log(error.response)
       setLoading(false)
     }
 

@@ -97,7 +97,8 @@ export const SignIn = (props) => {
       }, 2000);
       
     } catch (error) {
-      setLoginErrors(error.error)
+      setLoginErrors(error.response.data.error)
+      // console.log(error.response)
       setLoading(false)
     }
   }
