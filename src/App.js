@@ -15,7 +15,7 @@ import Tasker from './pages/Tasker';
 import { Navbar } from './components/navbar/Navbar';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
 
-import { ProtectedRoute } from './routes/ProtectedRoute';
+// import { ProtectedRoute } from './routes/ProtectedRoute';
 
 // import importData from './utils/importData';
 
@@ -51,7 +51,10 @@ function App() {
                 <Route path="/signin">
                   <SignIn setAdmin={setAdmin} setUser={setUser} />
                 </Route>
-                <ProtectedRoute path="/tasker" component={Tasker} user={user} />
+                <Route path="/tasker">
+                  <Tasker />
+                </Route>
+                {/* <ProtectedRoute path="/tasker" component={Tasker} user={user} /> */}
                 <Route exact path="/">
                   <Home user={user} setUser={setUser} />
                 </Route>
