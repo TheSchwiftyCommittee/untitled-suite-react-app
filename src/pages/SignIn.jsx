@@ -93,7 +93,7 @@ export const SignIn = (props) => {
       setLoading(false)
 
       setTimeout(() => {
-        history.push("/")
+        history.push("/tasker")
       }, 2000);
       
     } catch (error) {
