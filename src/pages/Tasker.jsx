@@ -77,7 +77,7 @@ const Tasker = () => {
 
   return (
     <Paper className={classes.paper} elevation={5}>
-      <Grid container>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           <Typography variant="h4" component="h1" gutterBottom>
             Tasker
@@ -103,7 +103,10 @@ const Tasker = () => {
             Lists
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
+          <ListCard />
+        </Grid>
+        <Grid item xs={12} md={6}>
           <ListCard />
         </Grid>
         <Grid item>
