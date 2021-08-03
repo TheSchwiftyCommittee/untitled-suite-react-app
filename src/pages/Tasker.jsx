@@ -72,7 +72,7 @@ const Tasker = () => {
 
   return (
     <Paper className={classes.paper} elevation={5}>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h4" component="h1" gutterBottom>
             Tasker
