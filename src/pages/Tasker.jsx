@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
+    width: '100%',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -63,12 +64,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
   },
 }));
 
@@ -99,7 +94,7 @@ const Tasker = () => {
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             Lists
           </Typography>
         </Grid>
