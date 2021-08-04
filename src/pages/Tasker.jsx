@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Tasker = () => {
   const classes = useStyles();
+
+  useEffect(() => {
+  }, [])
 
   return (
     <Paper className={classes.paper} elevation={5}>
