@@ -85,6 +85,7 @@ export const SignIn = (props) => {
         "password": values.password
       })
       localStorage.setItem('jwt', data.token)
+      // console.log(localStorage.getItem('jwt'))
 
       if (data.user.admin === true) {
         setAdmin(true)

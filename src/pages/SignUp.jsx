@@ -88,7 +88,7 @@ export const SignUp = (props) => {
         "password": values.password,
         "password_confirmation": values.passwordConfirmation
       })
-      localStorage.getItem('jwt', data.token)
+      localStorage.setItem('jwt', data.token)
       if (data.user.admin === true) {
         setAdmin(true)
       }
