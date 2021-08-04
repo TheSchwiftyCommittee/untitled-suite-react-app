@@ -17,6 +17,7 @@ import { ViewportProvider } from './components/viewport/ViewportProvider';
 
 // import { ProtectedRoute } from './routes/ProtectedRoute';
 
+import { USuiteApi } from './api/USuiteApi';
 // import importData from './utils/importData';
 
 const theme = createTheme({
@@ -34,7 +35,19 @@ function App() {
   const [admin, setAdmin] = useState(false)
   const [user, setUser] = useState(false)
 
+  const checkLoginStatus = () => {
+    try {
+      const { data } = USuiteApi.get("/users/auto_login", {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
+      })
+      console.log("logged in?", data)
+    } catch (error) {
+      console.log("error:", error)
+    }
+  }
+  
   useEffect(() => {
+    checkLoginStatus()
   }, [])
 
   return (
