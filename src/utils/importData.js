@@ -6,7 +6,7 @@ const importData = async (path) => {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('jwt') },
     });
     const data = await response.data;
-    console.log(`${apiUrl} Data has been loaded`);
+    console.log(`${apiUrl}${path} Data has been loaded`);
     return data;
   } catch (error) {
     console.log("Failed to load data");
