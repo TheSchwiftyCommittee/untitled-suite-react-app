@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
+
+import importData from '../utils/importData';
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -59,8 +61,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Tasker = () => {
   const classes = useStyles();
+  const [lists, setLists] = useState(null)
 
+  const getLists = async () => {
+    const data = await importData("/lists")
+    console.log(data)
+    let listsArray = await data
+    setLists(listsArray)
+  }
+  
   useEffect(() => {
+    getLists();
   }, [])
 
   return (
@@ -91,15 +102,11 @@ const Tasker = () => {
             Lists
           </Typography>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <ListCard />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <ListCard />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <ListCard />
-        </Grid>
+        {lists && lists.map((list) => (
+          <Grid item xs={12} md={6}>
+            <ListCard key={list.id} list={list} />
+          </Grid>
+        ))}
         <Grid item xs={12}>
           <AddNewCard />
         </Grid>

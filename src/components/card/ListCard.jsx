@@ -15,7 +15,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ListCard = () => {
+export const ListCard = (props) => {
+  const { list } = props
   const classes = useStyles();
 
   return (
@@ -31,9 +32,9 @@ export const ListCard = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Work"
+        title={list.title}
         titleTypographyProps={{variant: "h6"}}
-        subheader="1 task"
+        subheader={Object.keys(list).length + " tasks"}
         className={classes.heading}
       />
     </Card>
