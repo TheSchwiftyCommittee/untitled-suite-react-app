@@ -69,16 +69,16 @@ export const MobileMenu = (props) => {
           <ListItemIcon><TodayIcon /></ListItemIcon>
           <ListItemText primary="Calendar" />
         </ListItem>
-        <ListItem button component={NavLink} to="#">
-          <ListItemIcon><LocalOfferIcon /></ListItemIcon>
-          <ListItemText primary="Pricing" />
-        </ListItem>
         {admin && 
           <ListItem button component={NavLink} to="#">
             <ListItemIcon><PeopleAltIcon /></ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
         }
+        <ListItem button component={NavLink} to="#">
+          <ListItemIcon><LocalOfferIcon /></ListItemIcon>
+          <ListItemText primary="Pricing" />
+        </ListItem>
         {!user &&
           <div>
             <ListItem button component={NavLink} to="/signup">
