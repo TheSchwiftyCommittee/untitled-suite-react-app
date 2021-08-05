@@ -108,7 +108,7 @@ const Tasker = () => {
           </Grid>
         ))}
         <Grid item xs={12}>
-          <AddNewCard />
+          <AddNewCard path="/createNewList"/>
         </Grid>
       </Grid>
     </Paper>

@@ -11,6 +11,7 @@ import { Home } from './pages/Home';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import Tasker from './pages/Tasker';
+import NewList from './pages/CreateNewList';
 
 import { Navbar } from './components/navbar/Navbar';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
@@ -66,10 +67,11 @@ function App() {
                   <SignIn setAdmin={setAdmin} setUser={setUser} />
                 </Route>
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
+                <ProtectedRoute path="/createNewList" component={NewList} user={user} />
                 <Route exact path="/">
                   <Home user={user} setUser={setUser} />
                 </Route>
-              </Switch>
+              </Switch> 
             </div>
           </Router>
         </ThemeProvider>

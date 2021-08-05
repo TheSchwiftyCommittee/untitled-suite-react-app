@@ -34,7 +34,7 @@ export const ListCard = (props) => {
         }
         title={list.title}
         titleTypographyProps={{variant: "h6"}}
-        subheader={Object.keys(list).length + " tasks"}
+        subheader={list.description.length + " tasks"}
         className={classes.heading}
       />
     </Card>
