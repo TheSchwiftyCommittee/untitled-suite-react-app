@@ -36,19 +36,20 @@ function App() {
   const [user, setUser] = useState(false)
 
   const checkLoginStatus = () => {
-    try {
-      const { data } = USuiteApi.get("/users/auto_login", {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
-      })
-      console.log("logged in?", data)
-    } catch (error) {
-      console.log("error:", error)
+    const token = localStorage.getItem('jwt')
+    const isAdmin = localStorage.getItem('admin')
+    
+    if (token) {
+      setUser(true)
+    }
+    if (isAdmin) {
+      setAdmin(true)
     }
   }
   
   useEffect(() => {
     checkLoginStatus()
-  }, [user])
+  }, [])
 
   return (
     <ViewportProvider>

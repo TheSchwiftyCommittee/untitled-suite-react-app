@@ -89,6 +89,7 @@ export const SignIn = (props) => {
 
       if (data.user.admin === true) {
         setAdmin(true)
+        localStorage.setItem('admin', true)
       }
       setUser(true)
       setLoading(false)
