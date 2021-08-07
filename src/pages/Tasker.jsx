@@ -7,8 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-import { ListCard } from "../components/card/ListCard";
-import { AddNewCard } from "../components/card/AddNewCard";
+import { ListCard } from "../components/tasker/ListCard";
+import { AddNewCard } from "../components/tasker/AddNewCard";
 import { SearchBar } from "../components/SearchBar";
 
 
