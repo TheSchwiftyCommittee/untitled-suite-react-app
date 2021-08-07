@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: "80%",
     maxWidth: "70ch",
-    padding: "1rem",
+    padding: theme.spacing(3),
   },
   container: {
     display: "flex",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btn: {
-    marginTop: "1rem",
+    marginTop: theme.spacing(3),
   },
 }));
 

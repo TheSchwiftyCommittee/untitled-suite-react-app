@@ -12,7 +12,7 @@ import { AddNewCard } from "../components/card/AddNewCard";
 import { SearchBar } from "../components/SearchBar";
 
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   paper: {
     width: "80%",
     maxWidth: "100ch",
-    padding: "1rem",
+    padding: theme.spacing(3),
   },
 }));
 
