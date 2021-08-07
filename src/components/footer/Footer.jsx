@@ -21,19 +21,15 @@ const useStyles = makeStyles((theme) => ({
 const footers = [
   {
     title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
+    description: ['About Us'],
   },
   {
     title: 'Features',
-    description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
+    description: ['Tasker', 'Calendar', 'User'],
   },
   {
     title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
-    title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
+    description: ['Profile'],
   },
 ];
 
@@ -42,7 +38,7 @@ export const Footer = () => {
 
   return (
     <div>
-      <Container maxWidth="md" component="footer" className={classes.footer}>
+      <Container maxWidth="lg" component="footer" className={classes.footer}>
         <Grid container spacing={4} justifyContent="space-evenly">
           {footers.map((footer) => (
             <Grid item xs={6} sm={3} key={footer.title}>
@@ -52,7 +48,7 @@ export const Footer = () => {
               <ul>
                 {footer.description.map((item) => (
                   <li key={item}>
-                    <Link href="#" variant="subtitle1" color="textSecondary">
+                    <Link to="#" variant="subtitle1" color="textSecondary">
                       {item}
                     </Link>
                   </li>
