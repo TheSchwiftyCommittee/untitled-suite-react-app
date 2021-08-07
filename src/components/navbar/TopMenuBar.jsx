@@ -1,13 +1,26 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom'
-import Button from '@material-ui/core/Button';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
-export const TopMenuBar = () => {
+export const TopMenuBar = (props) => {
+  const { admin } = props;
+
   return (
     <>
-      <Button component={NavLink} to="#">Tasker</Button>
-      <Button component={NavLink} to="#">Calendar</Button>
-      <Button component={NavLink} to="#">Pricing</Button>
+      <Button variant="text" component={NavLink} to="/tasker">
+        Tasker
+      </Button>
+      <Button variant="text" component={NavLink} to="#">
+        Calendar
+      </Button>
+      <Button variant="text" component={NavLink} to="#">
+        Pricing
+      </Button>
+      {admin && (
+        <Button variant="text" component={NavLink} to="#">
+          Users
+        </Button>
+      )}
     </>
-  )
-}
+  );
+};

@@ -7,11 +7,17 @@ import {
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import './App.css';
-import { Home } from './components/Home';
-import { SignIn } from './components/SignIn';
+import { Home } from './pages/Home';
+import { SignIn } from './pages/SignIn';
+import { SignUp } from './pages/SignUp';
+import Tasker from './pages/Tasker';
+
 import { Navbar } from './components/navbar/Navbar';
-import { SignUp } from './components/SignUp';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
+
+// import { ProtectedRoute } from './routes/ProtectedRoute';
+
+import { USuiteApi } from './api/USuiteApi';
 // import importData from './utils/importData';
 
 const theme = createTheme({
@@ -29,7 +35,20 @@ function App() {
   const [admin, setAdmin] = useState(false)
   const [user, setUser] = useState(false)
 
+  const checkLoginStatus = () => {
+    const token = localStorage.getItem('jwt')
+    const isAdmin = localStorage.getItem('admin')
+    
+    if (token) {
+      setUser(true)
+    }
+    if (isAdmin) {
+      setAdmin(true)
+    }
+  }
+  
   useEffect(() => {
+    checkLoginStatus()
   }, [])
 
   return (
@@ -46,6 +65,8 @@ function App() {
                 <Route path="/signin">
                   <SignIn setAdmin={setAdmin} setUser={setUser} />
                 </Route>
+                <Route path="/tasker"><Tasker /></Route>
+                {/* <ProtectedRoute path="/tasker" component={Tasker} user={user} /> */}
                 <Route exact path="/">
                   <Home user={user} setUser={setUser} />
                 </Route>

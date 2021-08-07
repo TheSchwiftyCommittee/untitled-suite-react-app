@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom'
-
-import { USuiteApi } from "../api/USuiteApi";
+import { USuiteApi } from '../api/USuiteApi';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: '25ch',
+    maxWidth: '25ch',
   },
   paper: {
     width: '80%',
@@ -53,16 +52,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SignIn = (props) => {
+export const SignUp = (props) => {
   const { setAdmin, setUser } = props
+
+  const [registrationErrors, setRegistrationErrors] = useState("")
   const [loading, setLoading] = useState(false)
-  const [loginErrors, setLoginErrors] = useState("")
   const history = useHistory()
 
   const classes = useStyles();
   const [values, setValues] = useState({
     username: '',
+    email: '',
     password: '',
+    passwordConfirmation: '',
     showPassword: false,
   });
 
@@ -74,18 +76,19 @@ export const SignIn = (props) => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const signIn = async (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setLoginErrors("")
+    setRegistrationErrors("")
 
     try {
-      const { data } = await USuiteApi.post("/users/login", {
+      const { data } = await USuiteApi.post("/users/users", {
         "username": values.username,
-        "password": values.password
+        "email": values.email,
+        "password": values.password,
+        "password_confirmation": values.passwordConfirmation
       })
       localStorage.setItem('jwt', data.token)
-
       if (data.user.admin === true) {
         setAdmin(true)
       }
@@ -93,22 +96,23 @@ export const SignIn = (props) => {
       setLoading(false)
 
       setTimeout(() => {
-        history.push("/")
+        history.push("/tasker")
       }, 2000);
-      
     } catch (error) {
-      setLoginErrors(error.error)
+      setRegistrationErrors(error.response.data.error)
+      // console.log(error.response)
       setLoading(false)
     }
+
   }
 
   return (
     <Paper className={classes.paper} elevation={5}>
-      <h1>Sign In</h1>
-      {loginErrors && <div style={{ color: "red"}} >{loginErrors}</div>}
+      <h1>Sign Up</h1>
+      {registrationErrors && <div style={{ color: "red"}} >{registrationErrors}</div>}
       {loading && <h2>Loading ... </h2> }
       <Grid container className={classes.container}>
-        <form onSubmit={signIn} autoComplete="off">
+        <form onSubmit={handleOnSubmit} autoComplete="off">
           <Grid item>
             <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
               <InputLabel required htmlFor="filled-adornment-username" color="secondary">Username</InputLabel>
@@ -119,6 +123,19 @@ export const SignIn = (props) => {
                 type='text'
                 value={values.username}
                 onChange={handleChange('username')}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
+              <InputLabel required htmlFor="filled-adornment-email" color="secondary">Email</InputLabel>
+              <FilledInput
+                required
+                id="filled-adornment-email"
+                color="secondary"
+                type='text'
+                value={values.email}
+                onChange={handleChange('email')}
               />
             </FormControl>
           </Grid>
@@ -146,12 +163,36 @@ export const SignIn = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid container className={classes.btncontainer}>
+          <Grid item>
+            <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">
+              <InputLabel required htmlFor="filled-adornment-passwordConfirmation" color="secondary">Confirm Password</InputLabel>
+              <FilledInput
+                required
+                id="filled-adornment-passwordConfirmation"
+                color="secondary"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.passwordConfirmation}
+                onChange={handleChange('passwordConfirmation')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </Grid>
+          <Grid container className={classes.btncontainer} >
             <Grid item >
-              <Button className={classes.btn} type="submit" variant="contained" color="secondary" >Sign In</Button>
+              <Button className={classes.btn} type="submit" variant="contained" color="secondary" >Sign Up</Button>
             </Grid>
             <Grid item>
-              <Button className={classes.btn} variant="contained" color="secondary" component={NavLink} to="/signup">Sign Up</Button>
+              <Button className={classes.btn} variant="contained" color="secondary" component={NavLink} to="/signin">Sign In</Button>
             </Grid>
           </Grid>
         </form>

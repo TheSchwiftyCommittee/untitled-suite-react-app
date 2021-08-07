@@ -26,6 +26,8 @@ export const Navbar = (props) => {
   const handleLogoutClick = () => {
     setUser(false)
     setAdmin(false)
+    localStorage.removeItem('jwt')
+    localStorage.removeItem('admin')
   }
 
   return (
