@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useHistory, withRouter } from "react-router-dom";
+import {  useHistory, withRouter } from "react-router-dom";
 
-import { USuiteApi } from "../api/USuiteApi";
+import postData from "../utils/postData";
 
 import clsx from "clsx";
 import {
@@ -70,12 +70,12 @@ const CreateNewList = () => {
     setLoginErrors("");
 
     try {
-      const { data } = await USuiteApi.post("/lists", {
-        list: {
-          title: title
+      const data = await postData("/lists", {
+        "list": {
+          "title": title
         },
       });
-      console.log(data.response)
+      console.log(data)
       setLoading(false);
       setTimeout(() => {
         history.push("/tasker");
@@ -111,7 +111,7 @@ const CreateNewList = () => {
                 color="secondary"
                 type="text"
                 value={title}
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
               />
             </FormControl>
           </Grid>

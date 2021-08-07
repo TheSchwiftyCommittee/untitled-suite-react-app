@@ -1,16 +1,15 @@
 import {USuiteApi, apiUrl} from "../api/USuiteApi";
 
-const importData = async (path) => {
+const postData = async (path, data) => {
   try {
-    const response = await USuiteApi.post(path, {
+    const response = await USuiteApi.post(path, data, {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('jwt') },
     });
-    const data = await response.data;
     console.log(`Data has been sent to ${apiUrl}${path}`);
-    return data;
+    return response.data;
   } catch (error) {
     console.log("Failed to post data");
   }
 };
 
-export default importData;
+export default postData;

@@ -40,7 +40,7 @@ export const ListCard = (props) => {
           }
           title={list.title}
           titleTypographyProps={{variant: "h6"}}
-          subheader={list.description.length + " tasks"}
+          subheader={list.title.length + " tasks"}
           className={classes.heading}
         />
       </Card>
