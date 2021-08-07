@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom'
 
-import { USuiteApi } from "../api/USuiteApi";
+import postData from '../utils/postData';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -80,16 +80,17 @@ export const SignIn = (props) => {
     setLoginErrors("")
 
     try {
-      const { data } = await USuiteApi.post("/users/login", {
+      const data = await postData("/users/login", {
         "username": values.username,
         "password": values.password
-      })
+      });
+      // console.log(data)
       localStorage.setItem('jwt', data.token)
       // console.log(localStorage.getItem('jwt'))
 
       if (data.user.admin === true) {
-        setAdmin(true)
-        localStorage.setItem('admin', true)
+        setAdmin(true);
+        localStorage.setItem('admin', true);
       }
       setUser(true)
       setLoading(false)
@@ -99,7 +100,7 @@ export const SignIn = (props) => {
       }, 2000);
       
     } catch (error) {
-      setLoginErrors(error.response.data.error)
+      setLoginErrors(error.message)
       // console.log(error.response)
       setLoading(false)
     }

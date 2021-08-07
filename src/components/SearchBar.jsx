@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: alpha(theme.palette.grey['400'], 0.25),
     },
     marginLeft: 0,
-    marginBottom: '1rem',
+    marginBottom: theme.spacing(3),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: 'auto',
