@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
+  Switch
 } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
@@ -12,14 +11,13 @@ import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import Tasker from './pages/Tasker';
 import NewList from './pages/CreateNewList';
+import Pricing from './pages/Pricing';
 
 import { Navbar } from './components/navbar/Navbar';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
 
 import { ProtectedRoute } from './routes/ProtectedRoute';
-
-// import { USuiteApi } from './api/USuiteApi';
-// import importData from './utils/importData';
+import { StandardRoute } from './routes/StandardRoute';
 
 const theme = createTheme({
   palette: {
@@ -60,17 +58,12 @@ function App() {
             <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
             <div className="App-header">
               <Switch>
-                <Route path="/signup">
-                  <SignUp setAdmin={setAdmin} setUser={setUser} />
-                </Route>
-                <Route path="/signin">
-                  <SignIn setAdmin={setAdmin} setUser={setUser} />
-                </Route>
+                <StandardRoute path="/signup" component={SignUp} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/signin" component={SignIn} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
-                <Route exact path="/">
-                  <Home user={user} setUser={setUser} />
-                </Route>
+                <StandardRoute exact path="/" component={Home} user={user} setUser={setUser} /> 
               </Switch> 
             </div>
           </Router>
