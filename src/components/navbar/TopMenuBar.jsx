@@ -18,7 +18,7 @@ export const TopMenuBar = (props) => {
           Users
         </Button>
       )}
-      <Button variant="text" component={NavLink} to="#">
+      <Button variant="text" component={NavLink} to="/pricing">
         Pricing
       </Button>
     </>
