@@ -13,14 +13,14 @@ export const TopMenuBar = (props) => {
       <Button variant="text" component={NavLink} to="#">
         Calendar
       </Button>
-      <Button variant="text" component={NavLink} to="#">
-        Pricing
-      </Button>
       {admin && (
         <Button variant="text" component={NavLink} to="#">
           Users
         </Button>
       )}
+      <Button variant="text" component={NavLink} to="#">
+        Pricing
+      </Button>
     </>
   );
 };

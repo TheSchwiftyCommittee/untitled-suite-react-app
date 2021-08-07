@@ -11,13 +11,14 @@ import { Home } from './pages/Home';
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 import Tasker from './pages/Tasker';
+import NewList from './pages/CreateNewList';
 
 import { Navbar } from './components/navbar/Navbar';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
 
-// import { ProtectedRoute } from './routes/ProtectedRoute';
+import { ProtectedRoute } from './routes/ProtectedRoute';
 
-import { USuiteApi } from './api/USuiteApi';
+// import { USuiteApi } from './api/USuiteApi';
 // import importData from './utils/importData';
 
 const theme = createTheme({
@@ -65,12 +66,12 @@ function App() {
                 <Route path="/signin">
                   <SignIn setAdmin={setAdmin} setUser={setUser} />
                 </Route>
-                <Route path="/tasker"><Tasker /></Route>
-                {/* <ProtectedRoute path="/tasker" component={Tasker} user={user} /> */}
+                <ProtectedRoute path="/tasker" component={Tasker} user={user} />
+                <ProtectedRoute path="/createNewList" component={NewList} user={user} />
                 <Route exact path="/">
                   <Home user={user} setUser={setUser} />
                 </Route>
-              </Switch>
+              </Switch> 
             </div>
           </Router>
         </ThemeProvider>
