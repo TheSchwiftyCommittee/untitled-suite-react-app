@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, withRouter } from "react-router-dom";
 import { USuiteApi } from "../api/USuiteApi";
 
 import clsx from "clsx";
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SignUp = (props) => {
+const CreateProfile = (props) => {
   const { setAdmin, setUser } = props;
 
   const [registrationErrors, setRegistrationErrors] = useState("");
@@ -98,7 +98,7 @@ export const SignUp = (props) => {
       setLoading(false);
 
       setTimeout(() => {
-        history.push("/profile/new");
+        history.push("/tasker");
       }, 2000);
     } catch (error) {
       setRegistrationErrors(error.response.data.error);
@@ -254,3 +254,5 @@ export const SignUp = (props) => {
     </Paper>
   );
 };
+
+export default withRouter(CreateProfile);
