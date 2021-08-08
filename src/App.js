@@ -18,6 +18,7 @@ import { ViewportProvider } from './components/viewport/ViewportProvider';
 
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { StandardRoute } from './routes/StandardRoute';
+import Profile from './pages/Profile';
 
 const theme = createTheme({
   palette: {
@@ -63,6 +64,7 @@ function App() {
                 <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
+                <ProtectedRoute path="/profile" component={Profile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <StandardRoute exact path="/" component={Home} user={user} setUser={setUser} /> 
               </Switch> 
             </div>
