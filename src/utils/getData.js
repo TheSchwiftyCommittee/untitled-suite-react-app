@@ -1,6 +1,6 @@
 import { USuiteApi, apiUrl } from "../api/USuiteApi";
 
-const importData = async (path, config) => {
+const getData = async (path, config) => {
   try {
     const response = await USuiteApi.get(path, config);
     console.log(`${apiUrl}${path} Data has been loaded`);
@@ -10,4 +10,4 @@ const importData = async (path, config) => {
   }
 };
 
-export default importData;
+export default getData;

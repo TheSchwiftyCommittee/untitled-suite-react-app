@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useHistory, withRouter } from "react-router-dom";
-import { USuiteApi } from "../api/USuiteApi";
-import importData from "../utils/importData";
+import { useHistory, withRouter } from "react-router-dom";
+import getData from "../utils/getData";
+import putData from "../utils/putData";
 
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   FilledInput,
   InputLabel,
-  InputAdornment,
   FormControl,
   Button,
   Grid,
   Paper,
   Divider,
 } from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,10 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Profile = (props) => {
-  const { setAdmin, setUser } = props;
-
-  const [registrationErrors, setRegistrationErrors] = useState("");
+const Profile = () => {
+  const [profileErrors, setProfileErrors] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -70,6 +64,7 @@ const Profile = (props) => {
     first_name: "",
     last_name: "",
     avatar: "",
+    profile_id: ""
   });
 
   const getProfile = async () => {
@@ -81,18 +76,22 @@ const Profile = (props) => {
         "email": localStorage.getItem("email")
       }
     };
-    const data = await importData("/profiles", config);
-    
-    console.log(data);
+    const data = await getData("/profiles", config);
+    // console.log(data);
     setValues({
       ...values,
       username: localStorage.getItem("username"),
       email: localStorage.getItem("email"),
       first_name: data.profile.first_name,
       last_name: data.profile.last_name,
-      avatar: data.avatar
+      avatar: data.avatar,
+      profile_id: data.profile.id
     });
   };
+
+  useEffect(() => {
+    getProfile();
+  }, [])
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -103,80 +102,46 @@ const Profile = (props) => {
       ...values,
       [prop]: event.target.files[0],
     });
-    // console.log(URL.createObjectURL(event.target.files[0]))
-    console.log(event.target.files[0])
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    // console.log(event.target.files[0])
   };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setRegistrationErrors("");
+    setProfileErrors("");
+
+    console.log(values);
+    let formData = new FormData();
+    formData.append("first_name", values.first_name)
+    formData.append("last_name", values.last_name)
+    if (typeof values.avatar !== "string") {
+      formData.append("avatar", values.avatar, values.avatar.name)
+    } 
 
     try {
-      const { data } = await USuiteApi.post("/users/users", {
-        username: values.username,
-        email: values.email,
-        password: values.password,
-        password_confirmation: values.passwordConfirmation,
-      });
-      localStorage.setItem("jwt", data.token);
-      if (data.user.admin === true) {
-        setAdmin(true);
-      }
-      setUser(true);
-      setLoading(false);
+      const data = await putData(`/profiles/${localStorage.getItem("user")}`, formData);
 
+      console.log(data);
+      setLoading(false);
       setTimeout(() => {
         history.push("/tasker");
       }, 2000);
     } catch (error) {
-      setRegistrationErrors(error.response.data.error);
-      // console.log(error.response)
+      setProfileErrors(error.message);
+      console.log(error.response)
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    getProfile();
-  }, [])
-
   return (
     <Paper className={classes.paper} elevation={5}>
       <h1>Profile Page</h1>
-      {registrationErrors && (
-        <div style={{ color: "red" }}>{registrationErrors}</div>
+      {profileErrors && (
+        <div style={{ color: "red" }}>{profileErrors}</div>
       )}
       {loading && <h2>Loading ... </h2>}
       <Grid container className={classes.container}>
         <form onSubmit={handleOnSubmit} autoComplete="off">
-          <Grid item>
-            <FormControl
-              className={clsx(classes.margin, classes.textField)}
-              variant="filled"
-            >
-              <label htmlFor="image">Avatar Image</label>
-              <img
-                src={
-                  typeof values.avatar == "string" 
-                    ? 
-                    values.avatar
-                    : URL.createObjectURL(values.avatar)
-                }
-                alt={values.avatar ? "Default Image" : values.avatar.name}
-              />
-              <input
-                type="file"
-                accept="image/*"
-                name="image"
-                multiple={false}
-                onChange={onImageChange("avatar")}
-              />
-            </FormControl>
-          </Grid>
           <Grid item>
             <FormControl
               className={clsx(classes.margin, classes.textField)}
@@ -221,87 +186,42 @@ const Profile = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid item>
-            <FormControl
-              className={clsx(classes.margin, classes.textField)}
-              variant="filled"
-            >
-              <InputLabel
-                required
-                htmlFor="filled-adornment-password"
-                color="secondary"
-              >
-                Password
-              </InputLabel>
-              <FilledInput
-                required
-                id="filled-adornment-password"
-                color="secondary"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <FormControl
-              className={clsx(classes.margin, classes.textField)}
-              variant="filled"
-            >
-              <InputLabel
-                required
-                htmlFor="filled-adornment-passwordConfirmation"
-                color="secondary"
-              >
-                Confirm Password
-              </InputLabel>
-              <FilledInput
-                required
-                id="filled-adornment-passwordConfirmation"
-                color="secondary"
-                type={values.showPassword ? "text" : "password"}
-                value={values.passwordConfirmation}
-                onChange={handleChange("passwordConfirmation")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
           <Divider />
           <Grid item>
             <FormControl
               className={clsx(classes.margin, classes.textField)}
               variant="filled"
             >
+              <label htmlFor="image">Update Avatar Image</label>
+              <img
+                src={
+                  typeof values.avatar == "string" 
+                    ? values.avatar
+                    : URL.createObjectURL(values.avatar)
+                }
+                alt={values.avatar ? "Default Image" : values.avatar.name}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                multiple={false}
+                onChange={onImageChange("avatar")}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
               <InputLabel
-                required
                 htmlFor="filled-adornment-firstname"
                 color="secondary"
               >
                 First Name
               </InputLabel>
               <FilledInput
-                disabled
                 id="filled-adornment-firstname"
                 color="secondary"
                 type="text"
@@ -316,14 +236,12 @@ const Profile = (props) => {
               variant="filled"
             >
               <InputLabel
-                required
                 htmlFor="filled-adornment-lastname"
                 color="secondary"
               >
                 Last Name
               </InputLabel>
               <FilledInput
-                disabled
                 id="filled-adornment-lastname"
                 color="secondary"
                 type="text"
@@ -332,28 +250,15 @@ const Profile = (props) => {
               />
             </FormControl>
           </Grid>
-          <Grid container className={classes.btncontainer}>
-            <Grid item>
-              <Button
-                className={classes.btn}
-                type="submit"
-                variant="contained"
-                color="secondary"
-              >
-                Sign Up
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                className={classes.btn}
-                variant="contained"
-                color="secondary"
-                component={NavLink}
-                to="/signin"
-              >
-                Sign In
-              </Button>
-            </Grid>
+          <Grid item>
+            <Button
+              className={classes.btn}
+              type="submit"
+              variant="contained"
+              color="secondary"
+            >
+              Update Profile
+            </Button>
           </Grid>
         </form>
       </Grid>

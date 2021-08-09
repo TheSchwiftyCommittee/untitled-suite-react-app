@@ -89,8 +89,8 @@ const CreateProfile = () => {
 
     try {
       const data = await postData("/profiles", formData);
-
       console.log(data);
+      // localStorage.setItem("profile", data.profile.id)
       setLoading(false);
       setTimeout(() => {
         history.push("/tasker");

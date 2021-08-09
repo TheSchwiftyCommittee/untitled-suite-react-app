@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import importData from '../utils/importData';
+import getData from '../utils/getData';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -29,7 +29,7 @@ const Tasker = () => {
   const [lists, setLists] = useState(null)
 
   const getLists = async () => {
-    const data = await importData("/lists")
+    const data = await getData("/lists")
     console.log(data)
     let listsArray = await data
     setLists(listsArray)

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignIn = (props) => {
-  const { user, setAdmin, setUser } = props
+  const { setAdmin, setUser } = props
   const [loading, setLoading] = useState(false)
   const [loginErrors, setLoginErrors] = useState("")
   const history = useHistory()
