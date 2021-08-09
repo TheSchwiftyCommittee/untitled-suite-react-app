@@ -73,6 +73,7 @@ const CreateProfile = () => {
       [prop]: event.target.files,
     });
     // console.log(URL.createObjectURL(event.target.files[0]))
+    console.log(event.target.files)
   };
 
   const handleOnSubmit = async (e) => {
@@ -85,7 +86,7 @@ const CreateProfile = () => {
         id: localStorage.getItem("user"),
         first_name: values.first_name,
         last_name: values.last_name,
-        // avatar: values.avatar,
+        // avatar: values.avatar[0],
       });
 
       console.log(data);
