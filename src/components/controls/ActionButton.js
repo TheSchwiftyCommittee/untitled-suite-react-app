@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  error: {
+    backgroundColor: theme.palette.grey[400],
+    "& .MuiButton-label": {
+      color: theme.palette.error.main,
+    },
+  },
   primary: {
     backgroundColor: theme.palette.primary.light,
     "& .MuiButton-label": {

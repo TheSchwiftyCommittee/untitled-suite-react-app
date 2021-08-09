@@ -125,14 +125,14 @@ const Users = () => {
                 <TableCell>{item.admin_director}</TableCell>
                 <TableCell>
                   <Controls.ActionButton
-                    color="black"
+                    color=""
                     onClick={() => {
                       openInPopup(item);
                     }}
                   >
                     <EditOutlinedIcon fontSize="small" />
                   </Controls.ActionButton>
-                  <Controls.ActionButton color="secondary">
+                  <Controls.ActionButton color="error">
                     <CloseIcon fontSize="small" />
                   </Controls.ActionButton>
                 </TableCell>
