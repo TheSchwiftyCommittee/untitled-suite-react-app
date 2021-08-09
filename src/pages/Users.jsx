@@ -21,9 +21,11 @@ import Popup from "../components/Popup";
 import getData from "../utils/getData";
 
 const useStyles = makeStyles((theme) => ({
-  pageContent: {
+  paper: {
     margin: theme.spacing(5),
     padding: theme.spacing(3),
+    width: '80%',
+    maxWidth: '100ch',
   },
   searchInput: {
     width: "75%",
@@ -55,27 +57,30 @@ const Users = () => {
   const getUsers = async () => {
     const config = {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("jwt")
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       params: {
-        "username": localStorage.getItem("username"),
-        "id": localStorage.getItem("user")
-      }
+        username: localStorage.getItem("username"),
+        id: localStorage.getItem("user"),
+      },
     };
 
-    const data = await getData("/admins/user_index", config)
-    console.log(data)
-    let usersArray = await data
-    setUsers(usersArray)
-  }
+    const data = await getData("/admins/user_index", config);
+    console.log(data);
+    let usersArray = await data;
+    setUsers(usersArray);
+  };
 
   useEffect(() => {
     getUsers();
-  }, [])
+  }, []);
 
-
-  const { TblContainer, TblHead, TblPagination, recordsAfterPagingAndSorting } =
-    useTable(users, headCells, filterFn);
+  const { 
+    TblContainer, 
+    TblHead, 
+    TblPagination, 
+    usersAfterSortingAndPaging
+  } = useTable(users, headCells, filterFn);
 
   const handleSearch = (e) => {
     let target = e.target;
@@ -83,8 +88,8 @@ const Users = () => {
       fn: (items) => {
         if (target.value === "") return items;
         else
-          return items.filter((x) =>
-            x.username.toLowerCase().includes(target.value)
+          return items.filter((item) =>
+            item.username.toLowerCase().includes(target.value)
           );
       },
     });
@@ -96,13 +101,13 @@ const Users = () => {
 
   return (
     <>
-      <Paper className={classes.pageContent}>
+      <Paper className={classes.paper} elevation={5}>
         <Typography variant="h4" component="h1" gutterBottom>
           Admin Dashboard
         </Typography>
         <Toolbar>
           <Controls.Input
-            label="Search Employees"
+            label="Search Employee Usernames"
             className={classes.searchInput}
             InputProps={{
               startAdornment: (
@@ -117,15 +122,14 @@ const Users = () => {
         <TblContainer>
           <TblHead />
           <TableBody>
-            {recordsAfterPagingAndSorting().map((item) => (
+            {usersAfterSortingAndPaging().map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.username}</TableCell>
                 <TableCell>{item.email}</TableCell>
-                <TableCell>{item.admin}</TableCell>
-                <TableCell>{item.admin_director}</TableCell>
+                <TableCell>{item.admin ? "✅": "❌"}</TableCell>
+                <TableCell>{item.admin_director ? "✅": "❌"}</TableCell>
                 <TableCell>
                   <Controls.ActionButton
-                    color=""
                     onClick={() => {
                       openInPopup(item);
                     }}
@@ -143,7 +147,7 @@ const Users = () => {
         <TblPagination />
       </Paper>
       <Popup
-        title="Employee Form"
+        title="Set Admin"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       ></Popup>
