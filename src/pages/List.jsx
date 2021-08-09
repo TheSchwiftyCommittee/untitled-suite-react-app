@@ -64,7 +64,12 @@ const List = () => {
   const [lists, setLists] = useState(null)
 
   const getLists = async () => {
-    const data = await importData("/lists")
+    const config = {
+      // headers: {
+      //   Authorization: "Bearer " + localStorage.getItem("jwt")
+      // }
+    };
+    const data = await importData("/lists", config)
     console.log(data)
     let listsArray = await data
     setLists(listsArray)

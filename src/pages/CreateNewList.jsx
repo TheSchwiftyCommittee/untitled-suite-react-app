@@ -69,12 +69,15 @@ const CreateNewList = () => {
     setLoading(true);
     setLoginErrors("");
 
+    const body = {
+      "list": {
+        "title": title
+      }
+    }
+
     try {
-      const data = await postData("/lists", {
-        "list": {
-          "title": title
-        },
-      });
+      const data = await postData("/lists", body)
+
       console.log(data)
       setLoading(false);
       setTimeout(() => {

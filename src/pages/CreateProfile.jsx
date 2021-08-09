@@ -70,10 +70,10 @@ const CreateProfile = () => {
   const onImageChange = (prop) => (event) => {
     setValues({
       ...values,
-      [prop]: event.target.files,
+      [prop]: event.target.files[0],
     });
     // console.log(URL.createObjectURL(event.target.files[0]))
-    console.log(event.target.files)
+    console.log(event.target.files[0])
   };
 
   const handleOnSubmit = async (e) => {
@@ -81,13 +81,14 @@ const CreateProfile = () => {
     setLoading(true);
     setCreateProfileErrors("");
 
+    let formData = new FormData();
+    formData.append("id", localStorage.getItem("user"))
+    formData.append("first_name", values.first_name)
+    formData.append("last_name", values.last_name)
+    formData.append("avatar", values.avatar, values.avatar.name)
+
     try {
-      const data = await postData("/profiles", {
-        id: localStorage.getItem("user"),
-        first_name: values.first_name,
-        last_name: values.last_name,
-        // avatar: values.avatar[0],
-      });
+      const data = await postData("/profiles", formData);
 
       console.log(data);
       setLoading(false);
@@ -121,7 +122,7 @@ const CreateProfile = () => {
                   typeof values.avatar == "string" 
                     ? 
                     values.avatar
-                    : URL.createObjectURL(values.avatar[0])
+                    : URL.createObjectURL(values.avatar)
                 }
                 alt={values.avatar ? "Default Image" : values.avatar.name}
               />

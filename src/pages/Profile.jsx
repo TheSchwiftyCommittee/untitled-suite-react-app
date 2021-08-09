@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useHistory, withRouter } from "react-router-dom";
 import { USuiteApi } from "../api/USuiteApi";
+import importData from "../utils/importData";
 
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,6 +13,7 @@ import {
   Button,
   Grid,
   Paper,
+  Divider,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -65,13 +67,44 @@ const Profile = (props) => {
   const [values, setValues] = useState({
     username: "",
     email: "",
-    password: "",
-    passwordConfirmation: "",
-    showPassword: false,
+    first_name: "",
+    last_name: "",
+    avatar: "",
   });
+
+  const getProfile = async () => {
+    const config = {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+      params: {
+        "email": localStorage.getItem("email")
+      }
+    };
+    const data = await importData("/profiles", config);
+    
+    console.log(data);
+    setValues({
+      ...values,
+      username: localStorage.getItem("username"),
+      email: localStorage.getItem("email"),
+      first_name: data.profile.first_name,
+      last_name: data.profile.last_name,
+      avatar: data.avatar
+    });
+  };
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const onImageChange = (prop) => (event) => {
+    setValues({
+      ...values,
+      [prop]: event.target.files[0],
+    });
+    // console.log(URL.createObjectURL(event.target.files[0]))
+    console.log(event.target.files[0])
   };
 
   const handleClickShowPassword = () => {
@@ -107,15 +140,43 @@ const Profile = (props) => {
     }
   };
 
+  useEffect(() => {
+    getProfile();
+  }, [])
+
   return (
     <Paper className={classes.paper} elevation={5}>
-      <h1>Sign Up</h1>
+      <h1>Profile Page</h1>
       {registrationErrors && (
         <div style={{ color: "red" }}>{registrationErrors}</div>
       )}
       {loading && <h2>Loading ... </h2>}
       <Grid container className={classes.container}>
         <form onSubmit={handleOnSubmit} autoComplete="off">
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
+              <label htmlFor="image">Avatar Image</label>
+              <img
+                src={
+                  typeof values.avatar == "string" 
+                    ? 
+                    values.avatar
+                    : URL.createObjectURL(values.avatar)
+                }
+                alt={values.avatar ? "Default Image" : values.avatar.name}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                multiple={false}
+                onChange={onImageChange("avatar")}
+              />
+            </FormControl>
+          </Grid>
           <Grid item>
             <FormControl
               className={clsx(classes.margin, classes.textField)}
@@ -129,7 +190,7 @@ const Profile = (props) => {
                 Username
               </InputLabel>
               <FilledInput
-                required
+                disabled
                 id="filled-adornment-username"
                 color="secondary"
                 type="text"
@@ -151,7 +212,7 @@ const Profile = (props) => {
                 Email
               </InputLabel>
               <FilledInput
-                required
+                disabled
                 id="filled-adornment-email"
                 color="secondary"
                 type="text"
@@ -223,6 +284,51 @@ const Profile = (props) => {
                     </IconButton>
                   </InputAdornment>
                 }
+              />
+            </FormControl>
+          </Grid>
+          <Divider />
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
+              <InputLabel
+                required
+                htmlFor="filled-adornment-firstname"
+                color="secondary"
+              >
+                First Name
+              </InputLabel>
+              <FilledInput
+                disabled
+                id="filled-adornment-firstname"
+                color="secondary"
+                type="text"
+                value={values.first_name}
+                onChange={handleChange("first_name")}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
+              <InputLabel
+                required
+                htmlFor="filled-adornment-lastname"
+                color="secondary"
+              >
+                Last Name
+              </InputLabel>
+              <FilledInput
+                disabled
+                id="filled-adornment-lastname"
+                color="secondary"
+                type="text"
+                value={values.last_name}
+                onChange={handleChange("last_name")}
               />
             </FormControl>
           </Grid>

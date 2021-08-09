@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignIn = (props) => {
-  const { setAdmin, setUser } = props
+  const { user, setAdmin, setUser } = props
   const [loading, setLoading] = useState(false)
   const [loginErrors, setLoginErrors] = useState("")
   const history = useHistory()
@@ -78,21 +78,26 @@ export const SignIn = (props) => {
     e.preventDefault()
     setLoading(true)
     setLoginErrors("")
+    const body = {
+      "username": values.username,
+      "password": values.password
+    }
 
     try {
-      const data = await postData("/users/login", {
-        "username": values.username,
-        "password": values.password
-      });
+      const data = await postData("/users/login", body);
       // console.log(data)
       localStorage.setItem('jwt', data.token)
-      // console.log(localStorage.getItem('jwt'))
+      localStorage.setItem("user", data.user.id);
+      localStorage.setItem("username", data.user.username);
+      localStorage.setItem("email", data.user.email);
 
       if (data.user.admin === true) {
         setAdmin(true);
         localStorage.setItem('admin', true);
       }
+      // console.log(`user: ${user}`)
       setUser(true)
+      // console.log(`user: ${user}`)
       setLoading(false)
 
       setTimeout(() => {

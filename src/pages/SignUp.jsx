@@ -92,6 +92,9 @@ export const SignUp = (props) => {
       });
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("user", data.user.id);
+      localStorage.setItem("username", data.user.username);
+      localStorage.setItem("email", data.user.email);
+      console.log(localStorage.getItem("email"))
       setUser(true);
       setLoading(false);
 

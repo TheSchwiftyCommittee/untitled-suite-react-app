@@ -36,12 +36,15 @@ function App() {
   const [admin, setAdmin] = useState(false)
   const [user, setUser] = useState(false)
 
+  // When user closes the app and reopen
   const checkLoginStatus = () => {
     const token = localStorage.getItem('jwt')
     const isAdmin = localStorage.getItem('admin')
     
     if (token) {
+      console.log(`user: ${user}`)
       setUser(true)
+      console.log(`user: ${user}`)
     }
     if (isAdmin) {
       setAdmin(true)
@@ -60,8 +63,8 @@ function App() {
             <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
             <div className="App-header">
               <Switch>
-                <StandardRoute path="/signup" component={SignUp} setAdmin={setAdmin} setUser={setUser} /> 
-                <StandardRoute path="/signin" component={SignIn} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/signup" component={SignUp} user={user} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/signin" component={SignIn} user={user} setAdmin={setAdmin} setUser={setUser} /> 
                 <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
