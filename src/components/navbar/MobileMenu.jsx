@@ -90,7 +90,7 @@ export const MobileMenu = (props) => {
               <ListItemText primary="Sign Up" />
             </ListItem>
             <ListItem button component={NavLink} to="/signin">
-              <ListItemIcon><LockOpenIcon ></ListItemIcon>
+              <ListItemIcon><LockOpenIcon /></ListItemIcon>
               <ListItemText primary="Sign In" />
             </ListItem>
           </div>
