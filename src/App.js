@@ -6,20 +6,22 @@ import {
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import './App.css';
-import { Home } from './pages/Home';
-import { SignIn } from './pages/SignIn';
-import { SignUp } from './pages/SignUp';
-import Tasker from './pages/Tasker';
-import NewList from './pages/CreateNewList';
-import Pricing from './pages/Pricing';
 
 import { Navbar } from './components/navbar/Navbar';
 import { ViewportProvider } from './components/viewport/ViewportProvider';
 
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { StandardRoute } from './routes/StandardRoute';
+
+import { Home } from './pages/Home';
+import { SignIn } from './pages/SignIn';
+import { SignUp } from './pages/SignUp';
+import Tasker from './pages/Tasker';
+import NewList from './pages/CreateNewList';
+import Pricing from './pages/Pricing';
 import Profile from './pages/Profile';
 import CreateProfile from './pages/CreateProfile';
+import Users from './pages/Users';
 
 const theme = createTheme({
   palette: {
@@ -68,6 +70,7 @@ function App() {
                 <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
+                <ProtectedRoute path="/users" component={Users} user={user} />
                 <ProtectedRoute path="/profile/new" component={CreateProfile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <ProtectedRoute exact path="/profile" component={Profile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <StandardRoute exact path="/" component={Home} user={user} setUser={setUser} /> 

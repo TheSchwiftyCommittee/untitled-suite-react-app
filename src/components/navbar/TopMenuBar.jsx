@@ -14,7 +14,7 @@ export const TopMenuBar = (props) => {
         Calendar
       </Button>
       {admin && (
-        <Button variant="text" component={NavLink} to="#">
+        <Button variant="text" component={NavLink} to="/users">
           Users
         </Button>
       )}

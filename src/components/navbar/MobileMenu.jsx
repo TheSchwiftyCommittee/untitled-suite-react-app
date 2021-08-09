@@ -70,7 +70,7 @@ export const MobileMenu = (props) => {
           <ListItemText primary="Calendar" />
         </ListItem>
         {admin && 
-          <ListItem button component={NavLink} to="#">
+          <ListItem button component={NavLink} to="/users">
             <ListItemIcon><PeopleAltIcon /></ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
