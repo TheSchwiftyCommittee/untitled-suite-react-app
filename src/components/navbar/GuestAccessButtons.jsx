@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
-export const AccessButtons = () => {
+export const GuestAccessButtons = () => {
   return (
     <>
       <Button variant="text" component={NavLink} to="/signup">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import importData from '../utils/importData';
+import getData from '../utils/getData';
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -64,7 +64,12 @@ const List = () => {
   const [lists, setLists] = useState(null)
 
   const getLists = async () => {
-    const data = await importData("/lists")
+    const config = {
+      // headers: {
+      //   Authorization: "Bearer " + localStorage.getItem("jwt")
+      // }
+    };
+    const data = await getData("/lists", config)
     console.log(data)
     let listsArray = await data
     setLists(listsArray)

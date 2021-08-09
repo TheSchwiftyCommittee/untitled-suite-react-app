@@ -18,6 +18,8 @@ import { ViewportProvider } from './components/viewport/ViewportProvider';
 
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { StandardRoute } from './routes/StandardRoute';
+import Profile from './pages/Profile';
+import CreateProfile from './pages/CreateProfile';
 
 const theme = createTheme({
   palette: {
@@ -34,12 +36,15 @@ function App() {
   const [admin, setAdmin] = useState(false)
   const [user, setUser] = useState(false)
 
+  // When user closes the app and reopen
   const checkLoginStatus = () => {
     const token = localStorage.getItem('jwt')
     const isAdmin = localStorage.getItem('admin')
     
     if (token) {
+      console.log(`user: ${user}`)
       setUser(true)
+      console.log(`user: ${user}`)
     }
     if (isAdmin) {
       setAdmin(true)
@@ -58,11 +63,13 @@ function App() {
             <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
             <div className="App-header">
               <Switch>
-                <StandardRoute path="/signup" component={SignUp} setAdmin={setAdmin} setUser={setUser} /> 
-                <StandardRoute path="/signin" component={SignIn} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/signup" component={SignUp} user={user} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/signin" component={SignIn} user={user} setAdmin={setAdmin} setUser={setUser} /> 
                 <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
+                <ProtectedRoute path="/profile/new" component={CreateProfile} user={user} setAdmin={setAdmin} setUser={setUser} />
+                <ProtectedRoute exact path="/profile" component={Profile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <StandardRoute exact path="/" component={Home} user={user} setUser={setUser} /> 
               </Switch> 
             </div>

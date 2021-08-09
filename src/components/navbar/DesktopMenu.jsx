@@ -1,9 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
-import { Button, ButtonGroup } from "@material-ui/core";
-import { AccessButtons } from "./NavAccessButtons";
+import { ButtonGroup } from "@material-ui/core";
+import { GuestAccessButtons } from "./GuestAccessButtons";
 import { TopMenuBar } from "./TopMenuBar";
+import { UserAccessButtons } from "./UserAccessButtons";
 
 export const DesktopMenu = (props) => {
   const { admin, user, handleLogoutClick } = props;
@@ -15,17 +15,8 @@ export const DesktopMenu = (props) => {
       </ButtonGroup>
 
       <ButtonGroup color="inherit" aria-label="text primary button group">
-        {!user && <AccessButtons />}
-        {user && (
-          <Button
-            variant="text"
-            component={NavLink}
-            to="/"
-            onClick={handleLogoutClick}
-          >
-            Sign Out
-          </Button>
-        )}
+        {!user && <GuestAccessButtons />}
+        {user && <UserAccessButtons handleLogoutClick={handleLogoutClick} /> }
       </ButtonGroup>
     </>
   );
