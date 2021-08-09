@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignUp = (props) => {
-  const { setAdmin, setUser } = props;
+  const { setUser } = props;
 
   const [registrationErrors, setRegistrationErrors] = useState("");
   const [loading, setLoading] = useState(false);
@@ -91,9 +91,7 @@ export const SignUp = (props) => {
         password_confirmation: values.passwordConfirmation,
       });
       localStorage.setItem("jwt", data.token);
-      if (data.user.admin === true) {
-        setAdmin(true);
-      }
+      localStorage.setItem("user", data.user.id);
       setUser(true);
       setLoading(false);
 
@@ -101,7 +99,7 @@ export const SignUp = (props) => {
         history.push("/profile/new");
       }, 2000);
     } catch (error) {
-      setRegistrationErrors(error.response.data.error);
+      setRegistrationErrors(error.message);
       // console.log(error.response)
       setLoading(false);
     }
