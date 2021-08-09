@@ -18,6 +18,10 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import TodayIcon from '@material-ui/icons/Today';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles({
   list: {
@@ -82,20 +86,26 @@ export const MobileMenu = (props) => {
         {!user &&
           <div>
             <ListItem button component={NavLink} to="/signup">
-              <ListItemIcon />
+              <ListItemIcon><AssignmentIndIcon /></ListItemIcon>
               <ListItemText primary="Sign Up" />
             </ListItem>
             <ListItem button component={NavLink} to="/signin">
-              <ListItemIcon />
+              <ListItemIcon><LockOpenIcon ></ListItemIcon>
               <ListItemText primary="Sign In" />
             </ListItem>
           </div>
         }
         {user &&
-          <ListItem button onClick={handleLogoutClick}>
-            <ListItemIcon />
-            <ListItemText primary="Sign Out" />
-          </ListItem>
+          <div>
+            <ListItem button component={NavLink} to="/profile">
+              <ListItemIcon><AccountBoxIcon /></ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem button onClick={handleLogoutClick}>
+              <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+              <ListItemText primary="Sign Out" />
+            </ListItem>
+          </div>
         }
       </List>
     </div>
