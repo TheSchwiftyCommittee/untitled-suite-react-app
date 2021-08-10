@@ -100,7 +100,7 @@ export const SignUp = (props) => {
 
       setTimeout(() => {
         history.push("/profile/new");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setRegistrationErrors(error.message);
       // console.log(error.response)

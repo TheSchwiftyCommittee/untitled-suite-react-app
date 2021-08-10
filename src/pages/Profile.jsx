@@ -125,7 +125,7 @@ const Profile = () => {
       setLoading(false);
       setTimeout(() => {
         history.push("/tasker");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setProfileErrors(error.message);
       console.log(error.response)

@@ -94,7 +94,7 @@ const CreateProfile = () => {
       setLoading(false);
       setTimeout(() => {
         history.push("/tasker");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setCreateProfileErrors(error.message);
       console.log(error.response)

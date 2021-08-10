@@ -105,7 +105,7 @@ export const SignIn = (props) => {
 
       setTimeout(() => {
         history.push("/tasker")
-      }, 2000);
+      }, 1000);
       
     } catch (error) {
       setLoginErrors(error.message)
