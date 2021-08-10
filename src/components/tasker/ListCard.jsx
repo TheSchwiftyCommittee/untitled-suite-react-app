@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import {
   Avatar,
@@ -79,9 +79,9 @@ export const ListCard = (props) => {
           </IconButton>
         }
         title={
-          <NavLink to="/" style={{ color: "black", textDecoration: "none" }}>
+          <Link to="/" style={{ color: "black", textDecoration: "none" }}>
             {list.title}
-          </NavLink>
+          </Link>
         }
         titleTypographyProps={{ variant: "h6" }}
         className={classes.heading}

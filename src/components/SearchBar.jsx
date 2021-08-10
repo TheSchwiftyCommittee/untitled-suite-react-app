@@ -57,7 +57,7 @@ export const SearchBar = (props) => {
           <SearchIcon />
         </div>
         <InputBase
-          placeholder="Search List Name…"
+          placeholder="Search Title…"
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
