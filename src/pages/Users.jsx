@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 import {
   Paper,
@@ -15,10 +15,13 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import CloseIcon from "@material-ui/icons/Close";
 import { Search } from "@material-ui/icons";
 
-import useTable from "../components/useTable";
+import useTable from "../components/users/useTable";
 import Controls from "../components/controls/Controls";
 import Popup from "../components/Popup";
-import getData from "../utils/getData";
+
+import getUsersAdmin from "../utils/getUsers/getUsersAdmin";
+import getUsersAdminDirectors from "../utils/getUsers/getUsersAdminDirectors";
+import deleteData from "../utils/deleteData";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,7 +51,8 @@ const Users = (props) => {
   const { admin, adminDirector } = props;
 
   const classes = useStyles();
-
+  const history = useHistory();
+  const [errors, setErrors] = useState("")
   const [users, setUsers] = useState([]);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
@@ -58,24 +62,19 @@ const Users = (props) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   const getUsers = async () => {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-      params: {
-        username: localStorage.getItem("username"),
-        id: localStorage.getItem("user"),
-      },
-    };
-
-    const data = await getData("/admins/user_index", config);
-    console.log(data);
-    let usersArray = await data;
+    let usersArray;
+    if (admin) {
+      usersArray = await getUsersAdmin();
+    }
+    if (adminDirector) {
+      usersArray = await getUsersAdminDirectors();
+    }
+    console.log(usersArray)
     setUsers(usersArray);
-  };
-
+  } 
+  
   useEffect(() => {
-    getUsers();
+    getUsers()
   }, []);
 
   const { 
@@ -107,10 +106,36 @@ const Users = (props) => {
   } 
 
   const updateAdmin = () => {
-
+    
   }
 
-  const deleteUser = () => {
+  const handleClickDeleteUser = async (id) => {
+    let formData = new FormData();
+    formData.append("username", localStorage.getItem("username"))
+    formData.append("id", localStorage.getItem("user"))
+    formData.append("user_id", id)
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      },
+      data: formData
+    };
+    try {
+      let data;
+      if (admin) {
+        data = await deleteData("/admins/delete_user", config)
+      }
+      if (adminDirector) {
+        data = await deleteData("/admin_directors/delete_user", config)
+      }
+      console.log(data)
+      setTimeout(() => {
+        history.push("/tasker");
+      }, 1000);
+    } catch (error) {
+      setErrors(error.message);
+    }
 
   }
 
@@ -132,29 +157,33 @@ const Users = (props) => {
               ),
             }}
             onChange={handleSearch}
-          />
+            />
         </Toolbar>
+        {errors && <div style={{ color: "red" }}>{errors}</div>}
         <TblContainer>
           <TblHead />
           <TableBody>
-            {usersAfterSortingAndPaging().map((item) => (
+            {users && usersAfterSortingAndPaging().map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.username}</TableCell>
+                <TableCell>
+                  {/* {item.id} */}
+                  {item.username}
+                </TableCell>
                 <TableCell>{item.email}</TableCell>
                 <TableCell>{item.admin ? "✅": "❌"}</TableCell>
                 <TableCell>{item.admin_director ? "✅": "❌"}</TableCell>
                 <TableCell>
-                  {adminCheck() && 
+                  {adminDirector && 
                     <Controls.ActionButton
                       onClick={() => {
                         openInPopup();
                       }}
-                    >
+                      >
                       <EditOutlinedIcon fontSize="small" />
                     </Controls.ActionButton>
                   }
-                  {adminDirector && 
-                    <Controls.ActionButton color="error">
+                  {adminCheck() && 
+                    <Controls.ActionButton color="error" onClick={() => handleClickDeleteUser(item.id)}>
                       <CloseIcon fontSize="small" />
                     </Controls.ActionButton>
                   }

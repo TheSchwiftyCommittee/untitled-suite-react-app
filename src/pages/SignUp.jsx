@@ -90,6 +90,7 @@ export const SignUp = (props) => {
         password: values.password,
         password_confirmation: values.passwordConfirmation,
       });
+
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("user", data.user.id);
       localStorage.setItem("username", data.user.username);
