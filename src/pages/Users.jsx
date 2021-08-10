@@ -11,24 +11,24 @@ import {
   InputAdornment,
   Typography,
 } from "@material-ui/core";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import CloseIcon from "@material-ui/icons/Close";
 import { Search } from "@material-ui/icons";
 
 import useTable from "../components/users/useTable";
 import Controls from "../components/controls/Controls";
-import Popup from "../components/Popup";
+import AdminButtons from "../components/users/AdminButtons";
 
 import getUsersAdmin from "../utils/getUsers/getUsersAdmin";
 import getUsersAdminDirectors from "../utils/getUsers/getUsersAdminDirectors";
 import deleteData from "../utils/deleteData";
+import putData from "../utils/putData";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     margin: theme.spacing(5),
     padding: theme.spacing(3),
-    width: '80%',
-    maxWidth: '100ch',
+    width: "80%",
+    maxWidth: "100ch",
   },
   searchInput: {
     width: "75%",
@@ -52,14 +52,13 @@ const Users = (props) => {
 
   const classes = useStyles();
   const history = useHistory();
-  const [errors, setErrors] = useState("")
+  const [errors, setErrors] = useState("");
   const [users, setUsers] = useState([]);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
     },
   });
-  const [openPopup, setOpenPopup] = useState(false);
 
   const getUsers = async () => {
     let usersArray;
@@ -69,20 +68,16 @@ const Users = (props) => {
     if (adminDirector) {
       usersArray = await getUsersAdminDirectors();
     }
-    console.log(usersArray)
+    console.log(usersArray);
     setUsers(usersArray);
-  } 
-  
+  };
+
   useEffect(() => {
-    getUsers()
+    getUsers();
   }, []);
 
-  const { 
-    TblContainer, 
-    TblHead, 
-    TblPagination, 
-    usersAfterSortingAndPaging
-  } = useTable(users, headCells, filterFn);
+  const { TblContainer, TblHead, TblPagination, usersAfterSortingAndPaging } =
+    useTable(users, headCells, filterFn);
 
   const handleSearch = (e) => {
     let target = e.target;
@@ -97,47 +92,91 @@ const Users = (props) => {
     });
   };
 
-  const openInPopup = () => {
-    setOpenPopup(true);
-  };
-
-  const adminCheck = () => {
-    return admin || adminDirector ? true : false
-  } 
-
-  const updateAdmin = () => {
-    
-  }
-
   const handleClickDeleteUser = async (id) => {
     let formData = new FormData();
-    formData.append("username", localStorage.getItem("username"))
-    formData.append("id", localStorage.getItem("user"))
-    formData.append("user_id", id)
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("id", localStorage.getItem("user"));
+    formData.append("user_id", id);
 
     const config = {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt")
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
-      data: formData
+      data: formData,
     };
     try {
       let data;
       if (admin) {
-        data = await deleteData("/admins/delete_user", config)
+        data = await deleteData("/admins/delete_user", config);
       }
       if (adminDirector) {
-        data = await deleteData("/admin_directors/delete_user", config)
+        data = await deleteData("/admin_directors/delete_user", config);
       }
-      console.log(data)
+      console.log(data);
       setTimeout(() => {
-        history.push("/tasker");
+        history.go("/users");
       }, 1000);
     } catch (error) {
       setErrors(error.message);
     }
+  };
 
-  }
+  const handleClickDeleteAdmin = async (id) => {
+    let formData = new FormData();
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("id", localStorage.getItem("user"));
+    formData.append("user_id", id);
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      data: formData,
+    };
+    try {
+      const data = await deleteData("/admin_directors/delete_admin", config);
+      console.log(data);
+      setTimeout(() => {
+        history.go("/users");
+      }, 1000);
+    } catch (error) {
+      setErrors(error.message);
+    }
+  };
+
+  const handleClickAssign = async (id) => {
+    let formData = new FormData();
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("id", localStorage.getItem("user"));
+    formData.append("user_id", id);
+
+    try {
+      const data = await putData("/admin_directors/assign_admin", formData);
+      console.log(data);
+      setTimeout(() => {
+        history.go("/users");
+      }, 1000);
+    } catch (error) {
+      setErrors(error.message);
+    }
+  };
+
+  const handleClickUnassign = async (id) => {
+    let formData = new FormData();
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("id", localStorage.getItem("user"));
+    formData.append("user_id", id);
+
+    try {
+      const data = await putData("/admin_directors/unassign_admin", formData);
+      console.log(data);
+      setTimeout(() => {
+        history.go("/users");
+      }, 1000);
+    } catch (error) {
+      setErrors(error.message);
+    }
+  };
 
   return (
     <>
@@ -157,48 +196,40 @@ const Users = (props) => {
               ),
             }}
             onChange={handleSearch}
-            />
+          />
         </Toolbar>
         {errors && <div style={{ color: "red" }}>{errors}</div>}
         <TblContainer>
           <TblHead />
           <TableBody>
-            {users && usersAfterSortingAndPaging().map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>
-                  {/* {item.id} */}
-                  {item.username}
-                </TableCell>
-                <TableCell>{item.email}</TableCell>
-                <TableCell>{item.admin ? "✅": "❌"}</TableCell>
-                <TableCell>{item.admin_director ? "✅": "❌"}</TableCell>
-                <TableCell>
-                  {adminDirector && 
-                    <Controls.ActionButton
-                      onClick={() => {
-                        openInPopup();
-                      }}
+            {users &&
+              usersAfterSortingAndPaging().map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    {/* {item.id} */}
+                    {item.username}
+                  </TableCell>
+                  <TableCell>{item.email}</TableCell>
+                  <TableCell>{item.admin ? "✅" : "❌"}</TableCell>
+                  <TableCell>{item.admin_director ? "✅" : "❌"}</TableCell>
+                  <TableCell>
+                    {adminDirector && item.admin && <AdminButtons handleDelete={handleClickDeleteAdmin} handleUpdate={handleClickUnassign} id={item.id} admin={item.admin} />}
+                    {adminDirector && !item.admin && <AdminButtons handleDelete={handleClickDeleteUser} handleUpdate={handleClickAssign} id={item.id} admin={item.admin}/>}
+                    {admin && (
+                      <Controls.ActionButton
+                        color="error"
+                        onClick={() => handleClickDeleteUser(item.id)}
                       >
-                      <EditOutlinedIcon fontSize="small" />
-                    </Controls.ActionButton>
-                  }
-                  {adminCheck() && 
-                    <Controls.ActionButton color="error" onClick={() => handleClickDeleteUser(item.id)}>
-                      <CloseIcon fontSize="small" />
-                    </Controls.ActionButton>
-                  }
-                </TableCell>
-              </TableRow>
-            ))}
+                        <CloseIcon fontSize="small" />
+                      </Controls.ActionButton>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </TblContainer>
         <TblPagination />
       </Paper>
-      <Popup
-        title="Set Admin"
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
-      ></Popup>
     </>
   );
 };

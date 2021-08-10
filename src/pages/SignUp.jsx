@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { USuiteApi } from "../api/USuiteApi";
 
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,6 +15,7 @@ import {
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
+import postData from "../utils/postData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,14 +83,16 @@ export const SignUp = (props) => {
     setLoading(true);
     setRegistrationErrors("");
 
-    try {
-      const { data } = await USuiteApi.post("/users/users", {
-        username: values.username,
-        email: values.email,
-        password: values.password,
-        password_confirmation: values.passwordConfirmation,
-      });
+    const body = {
+      "username": values.username,
+      "password": values.password,
+      "email": values.email,
+      "password_confirmation": values.password_confirmation,
+    }
 
+    try {
+      const data = await postData("/users/users", body);
+      // console.log(data)
       localStorage.setItem("jwt", data.token);
       localStorage.setItem("user", data.user.id);
       localStorage.setItem("username", data.user.username);
