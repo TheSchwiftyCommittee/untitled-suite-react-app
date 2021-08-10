@@ -1,11 +1,14 @@
 import React from 'react'
-
-import { Avatar, ButtonBase, Card, CardHeader, IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
 
-const useStyles = makeStyles(() => ({
+import { Avatar, ButtonBase, Card, CardActions, CardHeader, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { orange } from '@material-ui/core/colors';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
@@ -13,7 +16,8 @@ const useStyles = makeStyles(() => ({
     width: "100%",
   },
   avatar: {
-    backgroundColor: "red",
+    color: theme.palette.getContrastText(orange[900]),
+    backgroundColor: orange[600],
   },
   heading: {
     textAlign: 'left',
@@ -30,7 +34,7 @@ export const ListCard = (props) => {
         <CardHeader
           avatar={
             <Avatar aria-label="list" className={classes.avatar}>
-              W
+              {list.title[0].toUpperCase()}
             </Avatar>
           }
           action={
@@ -40,9 +44,16 @@ export const ListCard = (props) => {
           }
           title={list.title}
           titleTypographyProps={{variant: "h6"}}
-          subheader={list.title.length + " tasks"}
           className={classes.heading}
         />
+        <CardActions disableSpacing>
+          <IconButton aria-label="rename list">
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="delete list">
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
       </Card>
     </ButtonBase>
   )

@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const Tasker = () => {
   const classes = useStyles();
   const [lists, setLists] = useState(null)
+  const [searchInput, setSearchInput] = useState("")
 
   const getLists = async () => {
     const config = {
@@ -48,6 +49,8 @@ const Tasker = () => {
     getLists();
   }, [])
 
+  // const filteredLists = lists.filter((list) => list.toLowerCase().includes(searchInput.toLowerCase()))
+
   return (
     <Paper key="tasker" className={classes.paper} elevation={5}>
       <Grid container spacing={2}>
@@ -57,16 +60,16 @@ const Tasker = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <SearchBar />
+          <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" component="h2" gutterBottom>
             Lists
           </Typography>
         </Grid>
-        {lists && lists.map((list) => (
-          <Grid item key={list.id} xs={12} md={6}>
-            <ListCard key={list.id} list={list} />
+        {lists && lists.filter((list) => list.title.toLowerCase().includes(searchInput.toLowerCase())).map((filteredList) => (
+          <Grid item key={filteredList.id} xs={12} md={6}>
+            <ListCard key={filteredList.id} list={filteredList} />
           </Grid>
         ))}
         <Grid item xs={12}>
