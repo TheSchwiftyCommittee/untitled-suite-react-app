@@ -124,8 +124,8 @@ const Profile = () => {
       console.log(data);
       setLoading(false);
       setTimeout(() => {
-        history.push("/tasker");
-      }, 2000);
+        history.go("/tasker");
+      }, 1000);
     } catch (error) {
       setProfileErrors(error.message);
       console.log(error.response)

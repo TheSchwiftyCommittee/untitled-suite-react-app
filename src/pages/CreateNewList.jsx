@@ -69,20 +69,19 @@ const CreateNewList = () => {
     setLoading(true);
     setLoginErrors("");
 
-    const body = {
-      "list": {
-        "title": title
-      }
-    }
+    let formData = new FormData();
+    formData.append("id", localStorage.getItem("user"))
+    formData.append("username", localStorage.getItem("username"))
+    formData.append("title", title)
 
     try {
-      const data = await postData("/lists", body)
+      const data = await postData("/lists", formData)
 
       console.log(data)
       setLoading(false);
       setTimeout(() => {
         history.push("/tasker");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       setLoginErrors(error.message);
       setLoading(false);

@@ -63,20 +63,24 @@ const List = () => {
   const classes = useStyles();
   const [lists, setLists] = useState(null)
 
-  const getLists = async () => {
+  const getTasks = async () => {
     const config = {
-      // headers: {
-      //   Authorization: "Bearer " + localStorage.getItem("jwt")
-      // }
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt")
+      },
+      data: {
+        "username": localStorage.getItem("username"),
+        
+      }
     };
-    const data = await getData("/lists", config)
+    const data = await getData("/tasks", config)
     console.log(data)
     let listsArray = await data
     setLists(listsArray)
   }
   
   useEffect(() => {
-    getLists();
+    getTasks();
   }, [])
 
   return (

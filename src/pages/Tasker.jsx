@@ -29,7 +29,16 @@ const Tasker = () => {
   const [lists, setLists] = useState(null)
 
   const getLists = async () => {
-    const data = await getData("/lists")
+    const config = {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("jwt")
+      },
+      params: {
+        "username": localStorage.getItem("username")
+      }
+    };
+
+    const data = await getData("/lists", config)
     console.log(data)
     let listsArray = await data
     setLists(listsArray)

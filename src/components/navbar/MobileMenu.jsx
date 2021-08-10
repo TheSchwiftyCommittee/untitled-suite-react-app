@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 });
 
 export const MobileMenu = (props) => {
-  const {admin, user, handleLogoutClick} = props
+  const { adminDirector, admin, user, handleLogoutClick } = props
 
   const classes = useStyles();
   const [state, setState] = useState({
@@ -43,9 +43,12 @@ export const MobileMenu = (props) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
+
+  const adminCheck = () => {
+    return admin || adminDirector ? true : false
+  } 
 
   const list = (anchor) => (
     <div
@@ -69,8 +72,8 @@ export const MobileMenu = (props) => {
           <ListItemIcon><TodayIcon /></ListItemIcon>
           <ListItemText primary="Calendar" />
         </ListItem>
-        {admin && 
-          <ListItem button component={NavLink} to="#">
+        {adminCheck() && 
+          <ListItem button component={NavLink} to="/users">
             <ListItemIcon><PeopleAltIcon /></ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
