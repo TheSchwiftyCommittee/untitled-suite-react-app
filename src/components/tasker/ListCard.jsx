@@ -36,7 +36,8 @@ export const ListCard = (props) => {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClickUpdateList = () => {
+  const handleClickUpdateList = (item) => {
+    localStorage.setItem("list_id", item);
     setOpenPopup(true);
     setAnchorEl(null);
   }
@@ -91,7 +92,7 @@ export const ListCard = (props) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuItem onClick={() => handleClickUpdateList()}>Update List</MenuItem>
+        <MenuItem onClick={() => handleClickUpdateList(list.id)}>Update List</MenuItem>
         <MenuItem onClick={() => handleClickDeleteList(list.id)}>Delete List</MenuItem>
       </Menu>
     </Card>

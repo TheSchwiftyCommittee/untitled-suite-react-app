@@ -11,6 +11,7 @@ import { ListCard } from "../components/tasker/ListCard";
 import { AddNewCard } from "../components/tasker/AddNewCard";
 import { SearchBar } from "../components/SearchBar";
 import Popup from "../components/Popup";
+import { UpdateList } from "../components/tasker/UpdateList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,6 +93,7 @@ const Tasker = () => {
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
+        <UpdateList listId={localStorage.getItem("list_id")} setOpenPopup={setOpenPopup}/>
       </Popup>
     </>
   );
