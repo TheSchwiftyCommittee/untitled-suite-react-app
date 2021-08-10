@@ -20,14 +20,14 @@ export const Navbar = (props) => {
   const { width } = useViewport();
   const breakpoint = 600;
 
-  const { admin, setAdmin, user, setUser } = props
+  const { adminDirector, setAdminDirector, admin, setAdmin, user, setUser } = props
   const classes = useStyles();
 
   const handleLogoutClick = () => {
     setUser(false)
     setAdmin(false)
-    localStorage.removeItem('jwt')
-    localStorage.removeItem('admin')
+    setAdminDirector(false)
+    localStorage.clear()
   }
 
   return (
@@ -36,11 +36,11 @@ export const Navbar = (props) => {
       <AppBar position="static">
         <Toolbar>
           <Box display="flex" flexGrow="1" justifyContent="space-between" m={1} p={1}>
-            {width < breakpoint && <MobileMenu admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}
+            {width < breakpoint && <MobileMenu adminDirector={adminDirector} admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}
             <Typography variant="h6" className={classes.title} component={NavLink} to="/">
               {'<Untitled Suite/>'}
             </Typography>
-            {width > breakpoint && <DesktopMenu admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}     
+            {width > breakpoint && <DesktopMenu adminDirector={adminDirector} admin={admin} user={user} handleLogoutClick={handleLogoutClick}/>}     
           </Box>
         </Toolbar>
       </AppBar>

@@ -35,6 +35,7 @@ const theme = createTheme({
 })
 
 function App() {
+  const [adminDirector, setAdminDirector] = useState(false)
   const [admin, setAdmin] = useState(false)
   const [user, setUser] = useState(false)
 
@@ -42,14 +43,16 @@ function App() {
   const checkLoginStatus = () => {
     const token = localStorage.getItem('jwt')
     const isAdmin = localStorage.getItem('admin')
+    const isAdminDirector = localStorage.getItem('adminDirector')
     
     if (token) {
-      console.log(`user: ${user}`)
       setUser(true)
-      console.log(`user: ${user}`)
     }
     if (isAdmin) {
       setAdmin(true)
+    }
+    if (isAdminDirector) {
+      setAdminDirector(true)
     }
   }
   
@@ -62,15 +65,15 @@ function App() {
       <div className="App">
         <ThemeProvider theme={theme}>
           <Router>
-            <Navbar admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
+            <Navbar adminDirector={adminDirector} setAdminDirector={setAdminDirector} admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
             <div className="App-header">
               <Switch>
                 <StandardRoute path="/signup" component={SignUp} user={user} setAdmin={setAdmin} setUser={setUser} /> 
-                <StandardRoute path="/signin" component={SignIn} user={user} setAdmin={setAdmin} setUser={setUser} /> 
+                <StandardRoute path="/signin" component={SignIn} user={user} setAdmin={setAdmin} setUser={setUser} setAdminDirector={setAdminDirector} /> 
                 <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
-                <ProtectedRoute path="/users" component={Users} user={user} />
+                <ProtectedRoute path="/users" component={Users} user={user} admin={admin} adminDirector={adminDirector} />
                 <ProtectedRoute path="/profile/new" component={CreateProfile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <ProtectedRoute exact path="/profile" component={Profile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <StandardRoute exact path="/" component={Home} user={user} setUser={setUser} /> 

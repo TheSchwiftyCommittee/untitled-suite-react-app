@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignIn = (props) => {
-  const { setAdmin, setUser } = props
+  const { setAdminDirector, setAdmin, setUser } = props
   const [loading, setLoading] = useState(false)
   const [loginErrors, setLoginErrors] = useState("")
   const history = useHistory()
@@ -78,6 +78,7 @@ export const SignIn = (props) => {
     e.preventDefault()
     setLoading(true)
     setLoginErrors("")
+    
     const body = {
       "username": values.username,
       "password": values.password
@@ -85,7 +86,7 @@ export const SignIn = (props) => {
 
     try {
       const data = await postData("/users/login", body);
-      // console.log(data)
+
       localStorage.setItem('jwt', data.token)
       localStorage.setItem("user", data.user.id);
       localStorage.setItem("username", data.user.username);
@@ -95,9 +96,11 @@ export const SignIn = (props) => {
         setAdmin(true);
         localStorage.setItem('admin', true);
       }
-      // console.log(`user: ${user}`)
+      if (data.user.admin_director === true) {
+        setAdminDirector(true);
+        localStorage.setItem('adminDirector', true);
+      }
       setUser(true)
-      // console.log(`user: ${user}`)
       setLoading(false)
 
       setTimeout(() => {
@@ -106,7 +109,6 @@ export const SignIn = (props) => {
       
     } catch (error) {
       setLoginErrors(error.message)
-      // console.log(error.response)
       setLoading(false)
     }
   }

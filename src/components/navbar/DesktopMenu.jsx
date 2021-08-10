@@ -6,12 +6,12 @@ import { TopMenuBar } from "./TopMenuBar";
 import { UserAccessButtons } from "./UserAccessButtons";
 
 export const DesktopMenu = (props) => {
-  const { admin, user, handleLogoutClick } = props;
+  const { adminDirector, admin, user, handleLogoutClick } = props;
 
   return (
     <>
       <ButtonGroup color="inherit" aria-label="text primary button group">
-        <TopMenuBar admin={admin} />
+        <TopMenuBar adminDirector={adminDirector} admin={admin} />
       </ButtonGroup>
 
       <ButtonGroup color="inherit" aria-label="text primary button group">

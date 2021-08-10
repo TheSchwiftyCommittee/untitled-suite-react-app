@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 export const TopMenuBar = (props) => {
-  const { admin } = props;
+  const { adminDirector, admin } = props;
+
+  const adminCheck = () => {
+    return admin || adminDirector ? true : false
+  } 
 
   return (
     <>
@@ -13,7 +17,7 @@ export const TopMenuBar = (props) => {
       <Button variant="text" component={NavLink} to="#">
         Calendar
       </Button>
-      {admin && (
+      {adminCheck() && (
         <Button variant="text" component={NavLink} to="/users">
           Users
         </Button>

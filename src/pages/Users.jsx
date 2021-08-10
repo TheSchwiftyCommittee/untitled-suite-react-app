@@ -39,13 +39,16 @@ const useStyles = makeStyles((theme) => ({
 const headCells = [
   { id: "username", label: "Employee Username" },
   { id: "email", label: "Email Address" },
-  { id: "admin", label: "Adminstrator" },
+  { id: "admin", label: "Administrator" },
   { id: "admin_director", label: "Lead Administrator" },
   { id: "actions", label: "Actions", disableSorting: true },
 ];
 
-const Users = () => {
+const Users = (props) => {
+  const { admin, adminDirector } = props;
+
   const classes = useStyles();
+
   const [users, setUsers] = useState([]);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
@@ -95,9 +98,21 @@ const Users = () => {
     });
   };
 
-  const openInPopup = (item) => {
+  const openInPopup = () => {
     setOpenPopup(true);
   };
+
+  const adminCheck = () => {
+    return admin || adminDirector ? true : false
+  } 
+
+  const updateAdmin = () => {
+
+  }
+
+  const deleteUser = () => {
+
+  }
 
   return (
     <>
@@ -129,16 +144,20 @@ const Users = () => {
                 <TableCell>{item.admin ? "✅": "❌"}</TableCell>
                 <TableCell>{item.admin_director ? "✅": "❌"}</TableCell>
                 <TableCell>
-                  <Controls.ActionButton
-                    onClick={() => {
-                      openInPopup(item);
-                    }}
-                  >
-                    <EditOutlinedIcon fontSize="small" />
-                  </Controls.ActionButton>
-                  <Controls.ActionButton color="error">
-                    <CloseIcon fontSize="small" />
-                  </Controls.ActionButton>
+                  {adminCheck() && 
+                    <Controls.ActionButton
+                      onClick={() => {
+                        openInPopup();
+                      }}
+                    >
+                      <EditOutlinedIcon fontSize="small" />
+                    </Controls.ActionButton>
+                  }
+                  {adminDirector && 
+                    <Controls.ActionButton color="error">
+                      <CloseIcon fontSize="small" />
+                    </Controls.ActionButton>
+                  }
                 </TableCell>
               </TableRow>
             ))}
