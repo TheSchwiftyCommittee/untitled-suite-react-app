@@ -68,10 +68,10 @@ export const MobileMenu = (props) => {
           <ListItemIcon><AssignmentIcon /></ListItemIcon>
           <ListItemText primary="Tasker" />
         </ListItem>
-        <ListItem button component={NavLink} to="#">
+        {/* <ListItem button component={NavLink} to="#">
           <ListItemIcon><TodayIcon /></ListItemIcon>
           <ListItemText primary="Calendar" />
-        </ListItem>
+        </ListItem> */}
         {adminCheck() && 
           <ListItem button component={NavLink} to="/users">
             <ListItemIcon><PeopleAltIcon /></ListItemIcon>
