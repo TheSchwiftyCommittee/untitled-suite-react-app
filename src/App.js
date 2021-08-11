@@ -39,7 +39,6 @@ const initialUser = () => {
   return localStorage.getItem('jwt') ? true : false;
 }
 
-
 function App() {
   const [adminDirector, setAdminDirector] = useState(false)
   const [admin, setAdmin] = useState(false)
