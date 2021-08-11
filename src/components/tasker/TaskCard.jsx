@@ -58,7 +58,7 @@ export const TaskCard = (props) => {
       console.log(data);
       setAnchorEl(null);
       setTimeout(() => {
-        history.push("/tasker");
+        history.go();
       }, 100);
     } catch (error) {
       setErrors(error.message);
