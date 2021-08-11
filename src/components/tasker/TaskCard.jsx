@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     color: theme.palette.getContrastText(orange[900]),
-    backgroundColor: orange[600],
+    backgroundColor: orange[200],
   },
   heading: {
     textAlign: "left",
@@ -30,22 +30,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ListCard = (props) => {
-  const { list, setOpenPopup, setErrors, match } = props;
+export const TaskCard = (props) => {
+  const { listId, task, setOpenPopup, setErrors } = props;
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClickUpdateList = (item) => {
-    localStorage.setItem("list_id", item);
+  const handleClickUpdateTask = (item) => {
+    localStorage.setItem("task_id", item);
     setOpenPopup(true);
     setAnchorEl(null);
   };
 
-  const handleClickDeleteList = async (id) => {
+  const handleClickDeleteTask = async (id) => {
     let formData = new FormData();
     formData.append("username", localStorage.getItem("username"));
-    formData.append("id", id);
+    formData.append("list_id", listId);
 
     const config = {
       headers: {
@@ -54,12 +54,12 @@ export const ListCard = (props) => {
       data: formData,
     };
     try {
-      const data = await deleteData(`/lists/${id}`, config);
+      const data = await deleteData(`/tasks/${id}`, config);
       console.log(data);
       setAnchorEl(null);
       setTimeout(() => {
-        history.go();
-      }, 10);
+        history.push("/tasker");
+      }, 100);
     } catch (error) {
       setErrors(error.message);
     }
@@ -70,7 +70,7 @@ export const ListCard = (props) => {
       <CardHeader
         avatar={
           <Avatar aria-label="list" className={classes.avatar}>
-            {list.title[0].toUpperCase()}
+            {task.title[0].toUpperCase()}
           </Avatar>
         }
         action={
@@ -81,19 +81,7 @@ export const ListCard = (props) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={
-          <Link
-            to={`${match.url}/${list.id}`}
-            style={{ color: "black", textDecoration: "none" }}
-            onClick={() =>
-              setTimeout(() => {
-                history.go();
-              }, 50)
-            }
-          >
-            {list.title}
-          </Link>
-        }
+        title={task.title}
         titleTypographyProps={{ variant: "h6" }}
         className={classes.heading}
       />
@@ -103,11 +91,11 @@ export const ListCard = (props) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-        <MenuItem onClick={() => handleClickUpdateList(list.id)}>
-          Update List
+        <MenuItem onClick={() => handleClickUpdateTask(task.id)}>
+          Update Card
         </MenuItem>
-        <MenuItem onClick={() => handleClickDeleteList(list.id)}>
-          Delete List
+        <MenuItem onClick={() => handleClickDeleteTask(task.id)}>
+          Delete Card
         </MenuItem>
       </Menu>
     </Card>

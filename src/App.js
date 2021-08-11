@@ -22,6 +22,7 @@ import Pricing from './pages/Pricing';
 import Profile from './pages/Profile';
 import CreateProfile from './pages/CreateProfile';
 import Users from './pages/Users';
+import CreateNewTask from './pages/CreateNewTask';
 
 const theme = createTheme({
   palette: {
@@ -34,10 +35,15 @@ const theme = createTheme({
   }
 })
 
+const initialUser = () => {
+  return localStorage.getItem('jwt') ? true : false;
+}
+
+
 function App() {
   const [adminDirector, setAdminDirector] = useState(false)
   const [admin, setAdmin] = useState(false)
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState(initialUser())
 
   // When user closes the app and reopen
   const checkLoginStatus = () => {
@@ -73,6 +79,7 @@ function App() {
                 <StandardRoute path="/pricing" component={Pricing} /> 
                 <ProtectedRoute path="/tasker" component={Tasker} user={user} />
                 <ProtectedRoute path="/createNewList" component={NewList} user={user} />
+                <ProtectedRoute path="/createNewTask/:listId" component={CreateNewTask} user={user} />
                 <ProtectedRoute path="/users" component={Users} user={user} admin={admin} adminDirector={adminDirector} />
                 <ProtectedRoute path="/profile/new" component={CreateProfile} user={user} setAdmin={setAdmin} setUser={setUser} />
                 <ProtectedRoute exact path="/profile" component={Profile} user={user} setAdmin={setAdmin} setUser={setUser} />

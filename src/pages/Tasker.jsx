@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { Route, useRouteMatch, withRouter, Switch } from "react-router-dom";
 
 import getData from "../utils/getData";
 
@@ -12,6 +12,7 @@ import { AddNewCard } from "../components/tasker/AddNewCard";
 import { SearchBar } from "../components/SearchBar";
 import Popup from "../components/Popup";
 import { UpdateList } from "../components/tasker/UpdateList";
+import { ListTasks } from "../components/tasker/ListTasks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,8 @@ const Tasker = () => {
   const [lists, setLists] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [errors, setErrors] = useState("")
-  const [openPopup, setOpenPopup] = useState(false)
+  const [openListPopup, setOpenListPopup] = useState(false)
+  let match = useRouteMatch()
 
   const getLists = async () => {
     const config = {
@@ -42,15 +44,19 @@ const Tasker = () => {
       },
     };
 
-    const data = await getData("/lists", config);
-    console.log(data);
-    let listsArray = await data;
-    setLists(listsArray);
+    try {
+      const data = await getData("/lists", config);
+      console.log(data);
+      let listsArray = await data;
+      setLists(listsArray);
+    } catch (error) {
+      setErrors(error.message)
+    }
   };
 
   useEffect(() => {
     getLists();
-  }, [lists]);
+  }, []);
 
   return (
     <>
@@ -80,22 +86,25 @@ const Tasker = () => {
               )
               .map((filteredList) => (
                 <Grid item key={filteredList.id} xs={12} md={6}>
-                  <ListCard key={filteredList.id} list={filteredList} setOpenPopup={setOpenPopup} setErrors={setErrors} />
+                  <ListCard key={filteredList.id} list={filteredList} setOpenPopup={setOpenListPopup} setErrors={setErrors} match={match}/>
                 </Grid>
               ))}
           <Grid item xs={12}>
-            <AddNewCard path="/createNewList" />
+            <AddNewCard path="/createNewList" title="Add New List" />
           </Grid>
         </Grid>
-
-        
+        <Switch>
+          <Route path={`${match.path}/:listId`}>
+            <ListTasks />
+          </Route>
+        </Switch>
       </Paper>
       <Popup
         title="Update List Title"
-        openPopup={openPopup}
-        setOpenPopup={setOpenPopup}
+        openPopup={openListPopup}
+        setOpenPopup={setOpenListPopup}
       >
-        <UpdateList listId={localStorage.getItem("list_id")} setOpenPopup={setOpenPopup}/>
+        <UpdateList listId={localStorage.getItem("list_id")} setOpenPopup={setOpenListPopup}/>
       </Popup>
     </>
   );

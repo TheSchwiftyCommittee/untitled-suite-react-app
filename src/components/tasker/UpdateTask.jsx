@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UpdateList = ({listId, setOpenPopup}) => {
+export const UpdateTask = ({taskId, setOpenPopup}) => {
   const history = useHistory();
   const classes = useStyles();
   const [title, setTitle] = useState("");
@@ -69,10 +69,10 @@ export const UpdateList = ({listId, setOpenPopup}) => {
     let formData = new FormData();
     formData.append("username", localStorage.getItem("username"))
     formData.append("title", title)
-    formData.append("id", listId)
+    formData.append("id", taskId)
 
     try {
-      const data = await putData(`/lists/${listId}`, formData)
+      const data = await putData(`/lists/${taskId}`, formData)
       console.log(data)
       history.go();
     } catch (error) {
