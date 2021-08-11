@@ -72,7 +72,7 @@ export const PlanCard = (props) => {
           variant={tier.buttonVariant}
           color="secondary"
           component={NavLink}
-          to={tier.buttonText === "Sign up for free" ? "/signup" : "#"} 
+          to={"/signup"} 
         >
           {tier.buttonText}
         </Button>
