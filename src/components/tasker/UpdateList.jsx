@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {  useHistory } from "react-router-dom";
 
 import putData from "../../utils/putData";
@@ -12,6 +12,7 @@ import {
   FormControl,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import getData from "../../utils/getData";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,12 +55,31 @@ const useStyles = makeStyles((theme) => ({
 export const UpdateList = ({listId, setOpenPopup}) => {
   const history = useHistory();
   const classes = useStyles();
-  const [title, setTitle] = useState("");
   const [updateErrors, setUpdateErrors] = useState("");
+  const [listTitle, setListTitle] = useState("");
+
+  const getListDetails = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      params: {
+        "username": localStorage.getItem("username"),
+      },
+    };
+  
+    const data = await getData(`/lists/${listId}`, config);
+    let listDetails = await data;
+    setListTitle(listDetails.title)
+  }
+
+  useEffect(() => {
+    getListDetails();
+  }, [])
 
   const handleChange = (e) => {
-    let newTitle = e.target.value
-    setTitle(newTitle);
+    let newListTitle = e.target.value
+    setListTitle(newListTitle);
   };
 
   const handleSubmitNewList = async (e) => {
@@ -68,7 +88,7 @@ export const UpdateList = ({listId, setOpenPopup}) => {
 
     let formData = new FormData();
     formData.append("username", localStorage.getItem("username"))
-    formData.append("title", title)
+    formData.append("title", listTitle)
     formData.append("id", listId)
 
     try {
@@ -102,7 +122,7 @@ export const UpdateList = ({listId, setOpenPopup}) => {
                 id="filled-adornment-title"
                 color="secondary"
                 type="text"
-                value={title}
+                value={listTitle}
                 onChange={handleChange}
               />
             </FormControl>

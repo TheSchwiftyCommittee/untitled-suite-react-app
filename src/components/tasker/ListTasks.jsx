@@ -72,7 +72,7 @@ export const ListTasks = () => {
         openPopup={openTaskPopup}
         setOpenPopup={setOpenTaskPopup}
       >
-        <UpdateTask taskId={localStorage.getItem("task_id")} setOpenPopup={setOpenTaskPopup}/>
+        <UpdateTask listId={listId} taskId={localStorage.getItem("task_id")} setOpenPopup={setOpenTaskPopup}/>
       </Popup>
     </>
   );

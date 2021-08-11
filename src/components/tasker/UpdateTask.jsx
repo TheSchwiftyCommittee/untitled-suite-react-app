@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import putData from "../../utils/putData";
 
@@ -12,7 +12,8 @@ import {
   FormControl,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import getData from "../../utils/getData";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,15 +52,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const UpdateTask = ({taskId, setOpenPopup}) => {
+export const UpdateTask = ({ listId, taskId, setOpenPopup }) => {
   const history = useHistory();
   const classes = useStyles();
-  const [title, setTitle] = useState("");
   const [updateErrors, setUpdateErrors] = useState("");
+  const [values, setValues] = useState({
+    title: "",
+    description: "",
+    priority: "",
+    completed: false,
+  });
 
-  const handleChange = (e) => {
-    let newTitle = e.target.value
-    setTitle(newTitle);
+  const getTaskDetails = async () => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      params: {
+        username: localStorage.getItem("username"),
+        list_id: listId,
+      },
+    };
+
+    const data = await getData(`/tasks/${taskId}`, config);
+    let taskDetails = await data;
+    setValues({
+      ...values,
+      title: taskDetails.title,
+      description: taskDetails.description,
+      priority: taskDetails.priority,
+      completed: taskDetails.completed,
+    });
+  };
+
+  useEffect(() => {
+    getTaskDetails();
+  }, []);
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
   };
 
   const handleSubmitNewList = async (e) => {
@@ -67,13 +98,16 @@ export const UpdateTask = ({taskId, setOpenPopup}) => {
     setUpdateErrors("");
 
     let formData = new FormData();
-    formData.append("username", localStorage.getItem("username"))
-    formData.append("title", title)
-    formData.append("id", taskId)
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("list_id", listId);
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("priority", values.priority);
+    formData.append("completed", values.completed);
 
     try {
-      const data = await putData(`/lists/${taskId}`, formData)
-      console.log(data)
+      const data = await putData(`/tasks/${taskId}`, formData);
+      console.log(data);
       history.go();
     } catch (error) {
       setUpdateErrors(error.message);
@@ -102,8 +136,74 @@ export const UpdateTask = ({taskId, setOpenPopup}) => {
                 id="filled-adornment-title"
                 color="secondary"
                 type="text"
-                value={title}
-                onChange={handleChange}
+                value={values.title}
+                onChange={handleChange("title")}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
+              <InputLabel
+                required
+                htmlFor="filled-adornment-description"
+                color="secondary"
+              >
+                Description
+              </InputLabel>
+              <FilledInput
+                required
+                id="filled-adornment-description"
+                color="secondary"
+                type="text"
+                value={values.description}
+                onChange={handleChange("description")}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
+              <InputLabel
+                required
+                htmlFor="filled-adornment-priority"
+                color="secondary"
+              >
+                Priority
+              </InputLabel>
+              <FilledInput
+                required
+                id="filled-adornment-priority"
+                color="secondary"
+                type="text"
+                value={values.priority}
+                onChange={handleChange("priority")}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormControl
+              className={clsx(classes.margin, classes.textField)}
+              variant="filled"
+            >
+              <InputLabel
+                required
+                htmlFor="filled-adornment-completed"
+                color="secondary"
+              >
+                Completed
+              </InputLabel>
+              <FilledInput
+                required
+                id="filled-adornment-completed"
+                color="secondary"
+                type="text"
+                value={values.completed}
+                onChange={handleChange("completed")}
               />
             </FormControl>
           </Grid>
@@ -118,12 +218,12 @@ export const UpdateTask = ({taskId, setOpenPopup}) => {
                   setOpenPopup(false);
                 }}
               >
-                Update Title
+                Update Task Details
               </Button>
             </Grid>
           </Grid>
         </form>
       </Grid>
     </div>
-  )
-}
+  );
+};

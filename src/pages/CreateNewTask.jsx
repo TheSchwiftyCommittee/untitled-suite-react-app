@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateNewTask = () => {
   const { listId } = useParams()
-  const [loading, setLoading] = useState(false);
   const [taskErrors, setTaskErrors] = useState("");
   const history = useHistory();
 
