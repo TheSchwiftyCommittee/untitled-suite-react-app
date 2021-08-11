@@ -10,10 +10,23 @@ import {
   FilledInput,
   InputLabel,
   FormControl,
+  TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import getData from "../../utils/getData";
 import { useEffect } from "react";
+
+const priorities = ["Critical", "High", "Medium", "Low"];
+const completed = [
+  {
+    value: true,
+    label: "Yes",
+  },
+  {
+    value: false,
+    label: "No",
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -168,21 +181,24 @@ export const UpdateTask = ({ listId, taskId, setOpenPopup }) => {
               className={clsx(classes.margin, classes.textField)}
               variant="filled"
             >
-              <InputLabel
+              <TextField
+                id="outlined-select-priority-native"
+                select
                 required
-                htmlFor="filled-adornment-priority"
-                color="secondary"
-              >
-                Priority
-              </InputLabel>
-              <FilledInput
-                required
-                id="filled-adornment-priority"
-                color="secondary"
-                type="text"
+                label="Priority"
                 value={values.priority}
                 onChange={handleChange("priority")}
-              />
+                SelectProps={{
+                  native: true,
+                }}
+                variant="filled"
+              >
+                {priorities.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </TextField>
             </FormControl>
           </Grid>
           <Grid item>
@@ -190,21 +206,24 @@ export const UpdateTask = ({ listId, taskId, setOpenPopup }) => {
               className={clsx(classes.margin, classes.textField)}
               variant="filled"
             >
-              <InputLabel
+              <TextField
+                id="outlined-select-completed-native"
+                select
                 required
-                htmlFor="filled-adornment-completed"
-                color="secondary"
-              >
-                Completed
-              </InputLabel>
-              <FilledInput
-                required
-                id="filled-adornment-completed"
-                color="secondary"
-                type="text"
+                label="Completed?"
                 value={values.completed}
                 onChange={handleChange("completed")}
-              />
+                SelectProps={{
+                  native: true,
+                }}
+                variant="filled"
+              >
+                {completed.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
             </FormControl>
           </Grid>
           <Grid container className={classes.btncontainer}>

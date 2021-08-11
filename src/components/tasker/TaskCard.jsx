@@ -69,7 +69,7 @@ export const TaskCard = (props) => {
     <Card className={classes.card} elevation={2}>
       <CardHeader
         avatar={
-          <Avatar aria-label="list" className={classes.avatar}>
+          <Avatar aria-label="list" className={task.completed ? classes.completed : classes.avatar}>
             {task.title[0].toUpperCase()}
           </Avatar>
         }

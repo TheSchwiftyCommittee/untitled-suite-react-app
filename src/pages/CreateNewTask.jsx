@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  useHistory, useParams, withRouter } from "react-router-dom";
+import { useHistory, useParams, withRouter } from "react-router-dom";
 
 import postData from "../utils/postData";
 
@@ -11,8 +11,11 @@ import {
   FilledInput,
   InputLabel,
   FormControl,
+  TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
+const priorities = ["Critical", "High", "Medium", "Low"];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateNewTask = () => {
-  const { listId } = useParams()
+  const { listId } = useParams();
   const [taskErrors, setTaskErrors] = useState("");
   const history = useHistory();
 
@@ -72,15 +75,15 @@ const CreateNewTask = () => {
     setTaskErrors("");
 
     let formData = new FormData();
-    formData.append("username", localStorage.getItem("username"))
-    formData.append("list_id", listId)
-    formData.append("title", values.title)
-    formData.append("description", values.description)
-    formData.append("priority", values.priority)
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("list_id", listId);
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("priority", values.priority);
 
     try {
-      const data = await postData("/tasks", formData)
-      console.log(data)
+      const data = await postData("/tasks", formData);
+      console.log(data);
       setTimeout(() => {
         history.push("/tasker");
       }, 1000);
@@ -138,26 +141,30 @@ const CreateNewTask = () => {
                 onChange={handleChange("description")}
               />
             </FormControl>
-          </Grid><Grid item>
+          </Grid>
+          <Grid item>
             <FormControl
               className={clsx(classes.margin, classes.textField)}
               variant="filled"
             >
-              <InputLabel
+              <TextField
+                id="outlined-select-priority-native"
+                select
                 required
-                htmlFor="filled-adornment-priority"
-                color="secondary"
-              >
-                Priority
-              </InputLabel>
-              <FilledInput
-                required
-                id="filled-adornment-priority"
-                color="secondary"
-                type="text"
+                label="Priority"
                 value={values.priority}
                 onChange={handleChange("priority")}
-              />
+                SelectProps={{
+                  native: true,
+                }}
+                variant="filled"
+              >
+                {priorities.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </TextField>
             </FormControl>
           </Grid>
           <Grid container className={classes.btncontainer}>
