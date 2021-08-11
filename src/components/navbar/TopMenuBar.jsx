@@ -14,9 +14,9 @@ export const TopMenuBar = (props) => {
       <Button variant="text" component={NavLink} to="/tasker">
         Tasker
       </Button>
-      <Button variant="text" component={NavLink} to="#">
+      {/* <Button variant="text" component={NavLink} to="#">
         Calendar
-      </Button>
+      </Button> */}
       {adminCheck() && (
         <Button variant="text" component={NavLink} to="/users">
           Users
