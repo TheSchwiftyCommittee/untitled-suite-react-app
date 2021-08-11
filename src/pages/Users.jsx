@@ -114,8 +114,9 @@ const Users = (props) => {
       }
       console.log(data);
       setTimeout(() => {
-        history.go("/users");
-      }, 1000);
+        history.push("/tasker");
+        history.push("/users");
+      }, 100);
     } catch (error) {
       setErrors(error.message);
     }
@@ -137,8 +138,9 @@ const Users = (props) => {
       const data = await deleteData("/admin_directors/delete_admin", config);
       console.log(data);
       setTimeout(() => {
-        history.go("/users");
-      }, 1000);
+        history.push("/tasker");
+        history.push("/users");
+      }, 100);
     } catch (error) {
       setErrors(error.message);
     }
@@ -154,7 +156,8 @@ const Users = (props) => {
       const data = await putData("/admin_directors/assign_admin", formData);
       console.log(data);
       setTimeout(() => {
-        history.go("/users");
+        history.push("/tasker");
+        history.push("/users");
       }, 1000);
     } catch (error) {
       setErrors(error.message);
@@ -171,7 +174,8 @@ const Users = (props) => {
       const data = await putData("/admin_directors/unassign_admin", formData);
       console.log(data);
       setTimeout(() => {
-        history.go("/users");
+        history.push("/tasker");
+        history.push("/users");
       }, 1000);
     } catch (error) {
       setErrors(error.message);

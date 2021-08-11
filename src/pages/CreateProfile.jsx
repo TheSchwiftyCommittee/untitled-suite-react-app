@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, withRouter } from "react-router-dom";
 
 import clsx from "clsx";
@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const CreateProfile = () => {
   const [createProfileErrors, setCreateProfileErrors] = useState("");
   const [loading, setLoading] = useState(false);
@@ -59,9 +61,24 @@ const CreateProfile = () => {
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
-    avatar:
-      "https://nyrevconnect.com/wp-content/uploads/2017/06/Placeholder_staff_photo-e1505825573317.png",
+    avatar: "",
   });
+
+  const getAvatar = async () => {
+    try {
+      const data = await fetch("http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png");
+      const blob = await data.blob();
+      const file = new File([blob], 'Placeholder.jpg', {type: blob.type});
+      console.log(file); 
+      setValues({ ...values, avatar: file });
+    } catch (err) {
+      console.error(err.name, err.message);
+    }
+  }
+  
+  useEffect(() => {
+    getAvatar()
+  }, [])
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -73,7 +90,7 @@ const CreateProfile = () => {
       [prop]: event.target.files[0],
     });
     // console.log(URL.createObjectURL(event.target.files[0]))
-    console.log(event.target.files[0])
+    console.log("My name is ", event.target.files[0]);
   };
 
   const handleOnSubmit = async (e) => {
@@ -82,14 +99,14 @@ const CreateProfile = () => {
     setCreateProfileErrors("");
 
     let formData = new FormData();
-    formData.append("id", localStorage.getItem("user"))
-    formData.append("first_name", values.first_name)
-    formData.append("last_name", values.last_name)
-    formData.append("avatar", values.avatar, values.avatar.name)
+    formData.append("id", localStorage.getItem("user"));
+    formData.append("first_name", values.first_name);
+    formData.append("last_name", values.last_name);
+    formData.append("avatar", values.avatar, values.avatar.name);
 
     try {
       const data = await postData("/profiles", formData);
-      
+
       console.log(data);
       // localStorage.setItem("profile", data.profile.id)
       setLoading(false);
@@ -98,7 +115,7 @@ const CreateProfile = () => {
       }, 1000);
     } catch (error) {
       setCreateProfileErrors(error.message);
-      console.log(error.response)
+      console.log(error.response);
       setLoading(false);
     }
   };
@@ -119,13 +136,8 @@ const CreateProfile = () => {
             >
               <label htmlFor="image">Avatar Image</label>
               <img
-                src={
-                  typeof values.avatar == "string" 
-                    ? 
-                    values.avatar
-                    : URL.createObjectURL(values.avatar)
-                }
-                alt={values.avatar ? "Default Image" : values.avatar.name}
+                src={values.avatar ? URL.createObjectURL(values.avatar) : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png" }
+                alt={values.avatar ? values.avatar.name : "default image"}
               />
               <input
                 type="file"
