@@ -78,13 +78,18 @@ const Profile = () => {
     };
     const data = await getData("/profiles", config);
     // console.log(data);
+    const profileAvatar = await fetch(data.avatar)
+    const blob = await profileAvatar.blob();
+    const file = new File([blob], `${localStorage.getItem("username")}.jpg`, {type: blob.type});
+    console.log(file);
+
     setValues({
       ...values,
       username: localStorage.getItem("username"),
       email: localStorage.getItem("email"),
       first_name: data.profile.first_name,
       last_name: data.profile.last_name,
-      avatar: data.avatar,
+      avatar: file,
       profile_id: data.profile.id
     });
   };
@@ -112,20 +117,21 @@ const Profile = () => {
 
     console.log(values);
     let formData = new FormData();
+    formData.append("username", values.username)
+    formData.append("user_id", localStorage.getItem("user"))
+    formData.append("email", values.email)
     formData.append("first_name", values.first_name)
     formData.append("last_name", values.last_name)
-    if (typeof values.avatar !== "string") {
-      formData.append("avatar", values.avatar, values.avatar.name)
-    } 
+    formData.append("avatar", values.avatar, values.avatar.name)
 
     try {
-      const data = await putData(`/profiles/${localStorage.getItem("user")}`, formData);
+      const data = await putData(`/profiles/${values.profile_id}`, formData);
 
       console.log(data);
       setLoading(false);
       setTimeout(() => {
-        history.go("/tasker");
-      }, 1000);
+        history.go();
+      }, 10);
     } catch (error) {
       setProfileErrors(error.message);
       console.log(error.response)
@@ -194,11 +200,7 @@ const Profile = () => {
             >
               <label htmlFor="image">Update Avatar Image</label>
               <img
-                src={
-                  typeof values.avatar == "string" 
-                    ? values.avatar
-                    : URL.createObjectURL(values.avatar)
-                }
+                src={values.avatar ? URL.createObjectURL(values.avatar) : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png" }
                 alt={values.avatar ? "Default Image" : values.avatar.name}
               />
               <input
