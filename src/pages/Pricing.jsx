@@ -37,7 +37,7 @@ const tiers = [
   },
   {
     title: "Pro",
-    subheader: "Most recommended",
+    subheader: "Free Pro Trial has extended to December 2021",
     price: 5,
     description: [
       "Unlimited lists",
