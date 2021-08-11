@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AddNewCard = (props) => {
-  const { path } = props;
+  const { path, title } = props;
   const classes = useStyles();
 
   return (
@@ -31,7 +31,7 @@ export const AddNewCard = (props) => {
       <Card className={classes.card} elevation={2}>
         <CardHeader
           avatar={<AddCircleIcon fontSize="large" />}
-          title="Add New List"
+          title={title}
           titleTypographyProps={{ variant: "h6" }}
           className={classes.heading}
         />

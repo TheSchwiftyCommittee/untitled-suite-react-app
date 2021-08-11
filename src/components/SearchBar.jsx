@@ -41,8 +41,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SearchBar = () => {
+export const SearchBar = (props) => {
   const classes = useStyles();
+  const {searchInput, setSearchInput} = props
+
+  const handleChange = (event) => {
+    let searchValue = event.target.value;
+    setSearchInput(searchValue)
+  }
 
   return (
     <>
@@ -51,12 +57,14 @@ export const SearchBar = () => {
           <SearchIcon />
         </div>
         <InputBase
-          placeholder="Search List Name…"
+          placeholder="Search Title…"
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
           inputProps={{ 'aria-label': 'search' }}
+          onChange={handleChange}
+          value={searchInput}
         />
       </div>
     </>
