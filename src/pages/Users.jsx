@@ -62,11 +62,10 @@ const Users = (props) => {
 
   const getUsers = async () => {
     let usersArray;
-    if (admin) {
-      usersArray = await getUsersAdmin();
-    }
     if (adminDirector) {
       usersArray = await getUsersAdminDirectors();
+    } else {
+      usersArray = await getUsersAdmin();
     }
     console.log(usersArray);
     setUsers(usersArray);
