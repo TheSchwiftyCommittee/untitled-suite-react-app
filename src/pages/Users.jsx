@@ -185,7 +185,7 @@ const Users = (props) => {
   return (
     <>
       <Paper className={classes.paper} elevation={5}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography data-testid="title" variant="h4" component="h1" gutterBottom>
           Admin Dashboard
         </Typography>
         <Toolbar>

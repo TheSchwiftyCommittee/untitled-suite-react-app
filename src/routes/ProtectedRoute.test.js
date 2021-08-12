@@ -2,15 +2,24 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ProtectedRoute } from './ProtectedRoute';
 import { MemoryRouter } from 'react-router-dom';
-import { Home } from '../pages/Home';
+import Tasker from "../pages/Tasker";
+import CreateNewList from '../pages/CreateNewList';
 
 const currentUser = true;
 
 describe('Protected route works with authenticated users', () => {
-  test('can login when user is authenticated', () => {
+  test('can log into Tasker when user is authenticated', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ProtectedRoute user={currentUser} component={Home} />
+        <ProtectedRoute user={currentUser} component={Tasker} />
+      </MemoryRouter>
+    );
+    expect(screen.queryByTestId('title')).toBeTruthy();
+  });
+  test('can log into CreateNewList when user is authenticated', () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <ProtectedRoute user={currentUser} component={CreateNewList} />
       </MemoryRouter>
     );
     expect(screen.queryByTestId('title')).toBeTruthy();

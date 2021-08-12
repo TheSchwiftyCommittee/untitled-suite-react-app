@@ -89,8 +89,8 @@ const CreateNewList = () => {
   };
 
   return (
-    <Paper className={classes.paper} elevation={5}>
-      <h1>Create New List</h1>
+    <Paper data-testid="title" className={classes.paper} elevation={5}>
+      <h1 >Create New List</h1>
       {loginErrors && <div style={{ color: "red" }}>{loginErrors}</div>}
       {loading && <h2>Loading ... </h2>}
       <Grid container className={classes.container}>
