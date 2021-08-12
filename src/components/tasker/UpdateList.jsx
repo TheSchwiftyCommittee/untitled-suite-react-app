@@ -75,6 +75,7 @@ export const UpdateList = ({listId, setOpenPopup}) => {
 
   useEffect(() => {
     getListDetails();
+    // eslint-disable-next-line
   }, [])
 
   const handleChange = (e) => {

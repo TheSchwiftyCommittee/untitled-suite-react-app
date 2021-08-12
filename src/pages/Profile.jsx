@@ -103,6 +103,7 @@ const Profile = () => {
 
   useEffect(() => {
     getProfile();
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (prop) => (event) => {

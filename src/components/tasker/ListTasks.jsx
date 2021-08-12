@@ -46,6 +46,7 @@ export const ListTasks = () => {
 
   useEffect(() => {
     getTasks();
+    // eslint-disable-next-line
   }, []);
 
   return (

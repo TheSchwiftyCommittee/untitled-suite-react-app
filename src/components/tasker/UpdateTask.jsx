@@ -100,6 +100,7 @@ export const UpdateTask = ({ listId, taskId, setOpenPopup }) => {
 
   useEffect(() => {
     getTaskDetails();
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (prop) => (event) => {
