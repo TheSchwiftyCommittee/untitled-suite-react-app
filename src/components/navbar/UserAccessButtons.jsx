@@ -16,6 +16,7 @@ export const UserAccessButtons = (props) => {
         Profile
       </Button>
       <Button
+        id="filled-adornment-signoutbutton"
         variant="text"
         component={NavLink}
         to="/"

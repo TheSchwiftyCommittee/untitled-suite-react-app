@@ -1,6 +1,6 @@
 describe("user signin", () => {
   beforeEach(() => {
-    //navigate to the sign up page
+    //navigate to the sign in page
     cy.visit("http://localhost:3000/signin");
   });
 
@@ -15,7 +15,7 @@ describe("user signin", () => {
     cy.url().should("eq", "http://localhost:3000/tasker");
   });
 
-  xit("requires a username", () => {
+  it("requires a username", () => {
     //fill out the fields except for usernames
     // cy.get('input[id="filled-adornment-username"]').type(`u${Date.now()}`);
     cy.get('input[id="filled-adornment-email"]').type(`u${Date.now()}@test.com`);

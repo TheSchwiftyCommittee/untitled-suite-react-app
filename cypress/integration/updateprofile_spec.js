@@ -1,4 +1,4 @@
-describe("user signin", () => {
+describe("User", () => {
   beforeEach(() => {
     //navigate to the sign up page
     cy.visit("http://localhost:3000/signin");
