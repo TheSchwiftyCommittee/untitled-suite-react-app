@@ -65,7 +65,7 @@ const CreateProfile = () => {
   const getAvatar = async () => {
     try {
       const data = await fetch(
-        "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
+        "https://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
       );
       const blob = await data.blob();
       const file = new File([blob], "Placeholder.jpg", { type: blob.type });
@@ -140,7 +140,7 @@ const CreateProfile = () => {
                 src={
                   values.avatar
                     ? URL.createObjectURL(values.avatar)
-                    : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
+                    : "https://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
                 }
                 alt={values.avatar ? values.avatar.name : "default image"}
               />

@@ -233,7 +233,7 @@ const Profile = () => {
                 src={
                   values.avatar
                     ? URL.createObjectURL(values.avatar)
-                    : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
+                    : "https://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
                 }
                 alt={values.avatar ? "Default Image" : values.avatar.name}
               />
