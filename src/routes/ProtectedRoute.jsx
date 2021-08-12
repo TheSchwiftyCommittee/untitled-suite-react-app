@@ -11,7 +11,7 @@ export const ProtectedRoute = ({
       {...rest}
       render={(props) => {
         if (user) {
-          return <Component {...rest} />;
+          return <Component {...rest} {...props} />;
         } else {
           return (
             <Redirect to={{ pathname: "/signin", state: { from: props.location } }} />
