@@ -41,7 +41,7 @@ export const Home = (props) => {
   return (
     <Paper className={classes.paper} elevation={5}>
       <Container maxWidth="sm" component="div" className={classes.heroContent}>
-        <Typography variant="h3" component="h1" gutterBottom>
+        <Typography data-testid="title" variant="h3" component="h1" gutterBottom>
           {"<Untitled Suite/>"}
         </Typography>
         <Typography variant="h4" component="h2" gutterBottom>

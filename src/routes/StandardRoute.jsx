@@ -2,10 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Footer } from "../components/footer/Footer";
 
-export const StandardRoute = ({
-  component: Component,
-  ...rest
-}) => {
+export const StandardRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -15,8 +12,7 @@ export const StandardRoute = ({
             <Component {...rest} />
             <Footer />
           </>
-
-        )
+        );
       }}
     ></Route>
   );

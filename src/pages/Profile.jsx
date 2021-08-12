@@ -14,6 +14,7 @@ import {
   Paper,
   Divider,
 } from "@material-ui/core";
+import deleteData from "../utils/deleteData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,8 +48,12 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "space-evenly",
     },
   },
-  btn: {
+  updatebtn: {
     marginTop: "1rem",
+  },
+  deletebtn: {
+    marginTop: "1rem",
+    color: theme.palette.error.main,
   },
 }));
 
@@ -64,23 +69,25 @@ const Profile = () => {
     first_name: "",
     last_name: "",
     avatar: "",
-    profile_id: ""
+    profile_id: "",
   });
 
   const getProfile = async () => {
     const config = {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("jwt")
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       params: {
-        "email": localStorage.getItem("email")
-      }
+        email: localStorage.getItem("email"),
+      },
     };
     const data = await getData("/profiles", config);
     // console.log(data);
-    const profileAvatar = await fetch(data.avatar)
+    const profileAvatar = await fetch(data.avatar);
     const blob = await profileAvatar.blob();
-    const file = new File([blob], `${localStorage.getItem("username")}.jpg`, {type: blob.type});
+    const file = new File([blob], `${localStorage.getItem("username")}.jpg`, {
+      type: blob.type,
+    });
     console.log(file);
 
     setValues({
@@ -90,13 +97,13 @@ const Profile = () => {
       first_name: data.profile.first_name,
       last_name: data.profile.last_name,
       avatar: file,
-      profile_id: data.profile.id
+      profile_id: data.profile.id,
     });
   };
 
   useEffect(() => {
     getProfile();
-  }, [])
+  }, []);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -117,12 +124,12 @@ const Profile = () => {
 
     console.log(values);
     let formData = new FormData();
-    formData.append("username", values.username)
-    formData.append("user_id", localStorage.getItem("user"))
-    formData.append("email", values.email)
-    formData.append("first_name", values.first_name)
-    formData.append("last_name", values.last_name)
-    formData.append("avatar", values.avatar, values.avatar.name)
+    formData.append("username", values.username);
+    formData.append("user_id", localStorage.getItem("user"));
+    formData.append("email", values.email);
+    formData.append("first_name", values.first_name);
+    formData.append("last_name", values.last_name);
+    formData.append("avatar", values.avatar, values.avatar.name);
 
     try {
       const data = await putData(`/profiles/${values.profile_id}`, formData);
@@ -134,17 +141,39 @@ const Profile = () => {
       }, 10);
     } catch (error) {
       setProfileErrors(error.message);
-      console.log(error.response)
+      console.log(error.response);
       setLoading(false);
     }
   };
 
+  const handleClickDelete = async () => {
+    let formData = new FormData();
+    formData.append("email", localStorage.getItem("email"));
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      data: formData,
+    };
+    try {
+      const data = await deleteData(`/users/delete_account`, config);
+      console.log(data);
+      setLoading(false);
+      localStorage.clear()
+      setTimeout(() => {
+        history.go();
+      }, 10);
+    } catch (error) {
+      setProfileErrors(error.message);
+      setLoading(false);
+    }
+  }
+
   return (
     <Paper className={classes.paper} elevation={5}>
       <h1>Profile Page</h1>
-      {profileErrors && (
-        <div style={{ color: "red" }}>{profileErrors}</div>
-      )}
+      {profileErrors && <div style={{ color: "red" }}>{profileErrors}</div>}
       {loading && <h2>Loading ... </h2>}
       <Grid container className={classes.container}>
         <form onSubmit={handleOnSubmit} autoComplete="off">
@@ -200,7 +229,11 @@ const Profile = () => {
             >
               <label htmlFor="image">Update Avatar Image</label>
               <img
-                src={values.avatar ? URL.createObjectURL(values.avatar) : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png" }
+                src={
+                  values.avatar
+                    ? URL.createObjectURL(values.avatar)
+                    : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
+                }
                 alt={values.avatar ? "Default Image" : values.avatar.name}
               />
               <input
@@ -237,10 +270,7 @@ const Profile = () => {
               className={clsx(classes.margin, classes.textField)}
               variant="filled"
             >
-              <InputLabel
-                htmlFor="filled-adornment-lastname"
-                color="secondary"
-              >
+              <InputLabel htmlFor="filled-adornment-lastname" color="secondary">
                 Last Name
               </InputLabel>
               <FilledInput
@@ -252,15 +282,27 @@ const Profile = () => {
               />
             </FormControl>
           </Grid>
-          <Grid item>
-            <Button
-              className={classes.btn}
-              type="submit"
-              variant="contained"
-              color="secondary"
-            >
-              Update Profile
-            </Button>
+          <Grid container className={classes.btncontainer}>
+            <Grid item>
+              <Button
+                className={classes.updatebtn}
+                type="submit"
+                variant="contained"
+                color="secondary"
+              >
+                Update Profile
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.deletebtn}
+                variant="contained"
+                color="primary"
+                onClick={() => handleClickDelete()}
+              >
+                Delete Account
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Grid>

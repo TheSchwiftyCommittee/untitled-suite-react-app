@@ -52,8 +52,8 @@ export const SearchBar = (props) => {
 
   return (
     <>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
+      <div data-testid="search-bar" className={classes.search}>
+        <div data-testid="search-icon" className={classes.searchIcon}>
           <SearchIcon />
         </div>
         <InputBase
