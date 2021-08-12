@@ -113,13 +113,13 @@ const Profile = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const onImageChange = (prop) => (event) => {
-    setValues({
-      ...values,
-      [prop]: event.target.files[0],
-    });
-    // console.log(event.target.files[0])
-  };
+  // const onImageChange = (prop) => (event) => {
+  //   setValues({
+  //     ...values,
+  //     [prop]: event.target.files[0],
+  //   });
+  //   // console.log(event.target.files[0])
+  // };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
