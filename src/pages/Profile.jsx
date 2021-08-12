@@ -237,6 +237,7 @@ const Profile = () => {
                 alt={values.avatar ? "Default Image" : values.avatar.name}
               />
               <input
+                id="filled-adornment-avatar"
                 type="file"
                 accept="image/*"
                 name="image"
@@ -286,6 +287,7 @@ const Profile = () => {
             <Grid item>
               <Button
                 className={classes.updatebtn}
+                id="filled-adornment-updateprofilebutton"
                 type="submit"
                 variant="contained"
                 color="secondary"

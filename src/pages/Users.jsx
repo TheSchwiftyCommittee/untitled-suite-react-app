@@ -185,7 +185,12 @@ const Users = (props) => {
   return (
     <>
       <Paper className={classes.paper} elevation={5}>
-        <Typography data-testid="title" variant="h4" component="h1" gutterBottom>
+        <Typography
+          data-testid="title"
+          variant="h4"
+          component="h1"
+          gutterBottom
+        >
           Admin Dashboard
         </Typography>
         <Toolbar>
@@ -217,8 +222,22 @@ const Users = (props) => {
                   <TableCell>{item.admin ? "✅" : "❌"}</TableCell>
                   <TableCell>{item.admin_director ? "✅" : "❌"}</TableCell>
                   <TableCell>
-                    {adminDirector && item.admin && <AdminButtons handleDelete={handleClickDeleteAdmin} handleUpdate={handleClickUnassign} id={item.id} admin={item.admin} />}
-                    {adminDirector && !item.admin && <AdminButtons handleDelete={handleClickDeleteUser} handleUpdate={handleClickAssign} id={item.id} admin={item.admin}/>}
+                    {adminDirector && item.admin && (
+                      <AdminButtons
+                        handleDelete={handleClickDeleteAdmin}
+                        handleUpdate={handleClickUnassign}
+                        id={item.id}
+                        admin={item.admin}
+                      />
+                    )}
+                    {adminDirector && !item.admin && (
+                      <AdminButtons
+                        handleDelete={handleClickDeleteUser}
+                        handleUpdate={handleClickAssign}
+                        id={item.id}
+                        admin={item.admin}
+                      />
+                    )}
                     {admin && (
                       <Controls.ActionButton
                         color="error"

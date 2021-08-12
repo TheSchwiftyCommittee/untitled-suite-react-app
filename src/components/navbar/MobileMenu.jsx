@@ -15,7 +15,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from '@material-ui/icons/Home';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import TodayIcon from '@material-ui/icons/Today';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
