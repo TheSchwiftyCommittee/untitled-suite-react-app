@@ -16,7 +16,7 @@ export const DesktopMenu = (props) => {
 
       <ButtonGroup color="inherit" aria-label="text primary button group">
         {!user && <GuestAccessButtons />}
-        {user && <UserAccessButtons handleLogoutClick={handleLogoutClick} /> }
+        {user && <UserAccessButtons handleLogoutClick={handleLogoutClick} />}
       </ButtonGroup>
     </>
   );

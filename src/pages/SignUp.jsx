@@ -234,6 +234,7 @@ export const SignUp = (props) => {
             <Grid item>
               <Button
                 className={classes.btn}
+                id="filled-adornment-signupbutton"
                 type="submit"
                 variant="contained"
                 color="secondary"

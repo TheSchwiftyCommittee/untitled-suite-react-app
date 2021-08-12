@@ -140,6 +140,7 @@ const CreateProfile = () => {
                 alt={values.avatar ? values.avatar.name : "default image"}
               />
               <input
+                id="filled-adornment-avatar"
                 type="file"
                 accept="image/*"
                 name="image"
@@ -177,14 +178,14 @@ const CreateProfile = () => {
             >
               <InputLabel
                 required
-                htmlFor="filled-adornment-email"
+                htmlFor="filled-adornment-lastname"
                 color="secondary"
               >
                 Last Name
               </InputLabel>
               <FilledInput
                 required
-                id="filled-adornment-email"
+                id="filled-adornment-lastname"
                 color="secondary"
                 type="text"
                 value={values.last_name}
@@ -196,6 +197,7 @@ const CreateProfile = () => {
             <Grid item>
               <Button
                 className={classes.btn}
+                id="filled-adornment-createprofilebutton"
                 type="submit"
                 variant="contained"
                 color="secondary"

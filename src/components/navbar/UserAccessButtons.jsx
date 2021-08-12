@@ -3,11 +3,16 @@ import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
 export const UserAccessButtons = (props) => {
-  const { handleLogoutClick } = props
+  const { handleLogoutClick } = props;
 
   return (
     <>
-      <Button variant="text" component={NavLink} to="/profile">
+      <Button
+        id="filled-adornment-profilebutton"
+        variant="text"
+        component={NavLink}
+        to="/profile"
+      >
         Profile
       </Button>
       <Button
