@@ -161,7 +161,7 @@ const Profile = () => {
       const data = await deleteData(`/users/delete_account`, config);
       console.log(data);
       setLoading(false);
-      localStorage.clear()
+      localStorage.clear();
       setTimeout(() => {
         history.go();
       }, 10);
@@ -169,7 +169,7 @@ const Profile = () => {
       setProfileErrors(error.message);
       setLoading(false);
     }
-  }
+  };
 
   return (
     <Paper className={classes.paper} elevation={5}>
