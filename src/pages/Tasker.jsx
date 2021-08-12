@@ -12,7 +12,7 @@ import { AddNewCard } from "../components/tasker/AddNewCard";
 import { SearchBar } from "../components/SearchBar";
 import Popup from "../components/Popup";
 import { UpdateList } from "../components/tasker/UpdateList";
-import { ListTasks } from "../components/tasker/ListTasks";
+import ListTasks from "../components/tasker/ListTasks";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,8 +94,8 @@ const Tasker = () => {
           </Grid>
         </Grid>
         <Switch>
-          <Route path={`${match.path}/:listId`}>
-            <ListTasks />
+          <Route path={`${match.path}/:listId`} component={ListTasks}>
+            {/* <ListTasks /> */}
           </Route>
         </Switch>
       </Paper>

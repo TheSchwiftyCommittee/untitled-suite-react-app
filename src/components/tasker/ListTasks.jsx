@@ -1,6 +1,6 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
 import getData from "../../utils/getData";
 import Popup from "../Popup";
 import { AddNewCard } from "./AddNewCard";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const ListTasks = () => {
+const ListTasks = () => {
   let { listId } = useParams();
   const classes = useStyles();
   const [tasks, setTasks] = useState(null);
@@ -33,6 +33,7 @@ export const ListTasks = () => {
         list_id: listId
       },
     };
+    console.log(listId)
 
     try {
       const data = await getData("/tasks", config);
@@ -78,3 +79,5 @@ export const ListTasks = () => {
     </>
   );
 };
+
+export default withRouter(ListTasks);

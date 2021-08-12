@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Switch
 } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
@@ -69,7 +69,7 @@ function App() {
     <ViewportProvider>
       <div className="App">
         <ThemeProvider theme={theme}>
-          <Router>
+          <HashRouter>
             <Navbar adminDirector={adminDirector} setAdminDirector={setAdminDirector} admin={admin} setAdmin={setAdmin} user={user} setUser={setUser} />
             <div className="App-header">
               <Switch>
@@ -85,7 +85,7 @@ function App() {
                 <StandardRoute exact path="/" component={Home} user={user} setUser={setUser} /> 
               </Switch> 
             </div>
-          </Router>
+          </HashRouter>
         </ThemeProvider>
       </div>
     </ViewportProvider>

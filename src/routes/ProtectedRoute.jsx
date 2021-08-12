@@ -11,10 +11,10 @@ export const ProtectedRoute = ({
       {...rest}
       render={(props) => {
         if (user) {
-          return <Component {...rest} {...props} />;
+          return <Component key="component" {...rest} {...props} />;
         } else {
           return (
-            <Redirect to={{ pathname: "/signin", state: { from: props.location } }} />
+            <Redirect key="signin" to={{ pathname: "/signin", state: { from: props.location } }} />
           );
         }
       }}
