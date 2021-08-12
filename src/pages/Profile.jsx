@@ -82,13 +82,15 @@ const Profile = () => {
       },
     };
     const data = await getData("/profiles", config);
-    // console.log(data);
+    console.log(data);
     const profileAvatar = await fetch(data.avatar);
     const blob = await profileAvatar.blob();
+    console.log(blob)
     const file = new File([blob], `${localStorage.getItem("username")}.jpg`, {
       type: blob.type,
     });
     console.log(file);
+    console.log(URL.createObjectURL(file))
 
     setValues({
       ...values,
