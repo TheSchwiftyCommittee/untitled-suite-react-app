@@ -2,27 +2,34 @@ import { USuiteApi } from "../api/USuiteApi";
 import getData from "./getData";
 
 jest.mock("../api/USuiteApi");
-global.console.log = jest.fn()
+global.console.log = jest.fn();
 
 describe("getData", () => {
-  afterEach(jest.clearAllMocks)
-  
+  afterEach(jest.clearAllMocks);
+
   test("should fetch data", async () => {
-    const users = [{ name: "Bob" }];
+    const users = [
+      {
+        username: "mortysmith",
+        email: "mortysmith@test.com",
+        first_name: "Morty",
+        last_name: "Smith",
+      },
+    ];
     const resp = { data: users };
     USuiteApi.get.mockResolvedValue(resp);
-    
+
     const data = await getData("/users", {});
     // console.log(data)
     expect(data).toBe(users);
-    expect(USuiteApi.get).toHaveBeenCalledTimes(1)
+    expect(USuiteApi.get).toHaveBeenCalledTimes(1);
   });
-  
+
   test("should log console if error", async () => {
-    USuiteApi.get.mockRejectedValueOnce()
-    
+    USuiteApi.get.mockRejectedValueOnce();
+
     await getData("/users", {});
-    expect(console.log).toHaveBeenCalledTimes(1)
-    expect(console.log).toHaveBeenLastCalledWith('Failed to load data')
+    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenLastCalledWith("Failed to load data");
   });
-})
+});

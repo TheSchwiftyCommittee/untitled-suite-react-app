@@ -11,8 +11,12 @@ const getUsersAdmin = async () => {
     },
   };
 
-  const data = await getData("/admins/user_index", config);
-  return data
+  try {
+    const data = await getData("/admins/user_index", config);
+    return data
+  } catch (error) {
+    console.log("Failed to get User Data")
+  }
 };
 
 export default getUsersAdmin;

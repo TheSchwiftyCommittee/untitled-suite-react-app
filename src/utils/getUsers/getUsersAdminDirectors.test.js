@@ -1,11 +1,11 @@
-import { USuiteApi } from "../api/USuiteApi";
-import putData from "./putData";
+import getUsersAdminDirectors from "./getUsersAdminDirectors";
+import getData from "../getData";
 
-jest.mock("../api/USuiteApi");
+jest.mock("../getData");
 global.console.log = jest.fn();
 
-describe("putData", () => {
-  afterEach(jest.resetAllMocks);
+describe("getData", () => {
+  afterEach(jest.clearAllMocks);
 
   test("should fetch data", async () => {
     const users = [
@@ -16,22 +16,21 @@ describe("putData", () => {
         last_name: "Smith",
       },
     ];
-    const resp = { data: users };
-    USuiteApi.put.mockResolvedValue(resp);
+    getData.mockResolvedValue(users);
 
-    const data = await putData("/users", {});
+    const data = await getUsersAdminDirectors();
     // console.log(data)
     expect(data).toBe(users);
-    expect(USuiteApi.put).toHaveBeenCalledTimes(1);
+    expect(getData).toHaveBeenCalledTimes(1);
   });
 
   test("should log console if error", async () => {
-    USuiteApi.get.mockRejectedValueOnce();
+    getData.mockRejectedValueOnce();
 
-    await putData("/users", {});
+    await getUsersAdminDirectors("/users", {});
     expect(console.log).toHaveBeenCalled();
     expect(console.log).toHaveBeenLastCalledWith(
-      expect.stringContaining("Failed to updated")
+      expect.stringContaining("Failed to get User Data")
     );
   });
 });

@@ -4,11 +4,16 @@ import deleteData from "./deleteData";
 jest.mock("../api/USuiteApi");
 console.log = jest.fn();
 
-describe("postData", () => {
+describe("deleteData", () => {
   afterEach(jest.resetAllMocks);
 
   test("should fetch data", async () => {
-    const users = [{ name: "Bob" }];
+    const users = [
+      {
+        username: "mortysmith",
+        email: "mortysmith@test.com",
+      },
+    ];
     const resp = { data: users };
     USuiteApi.delete.mockResolvedValue(resp);
 

@@ -8,7 +8,12 @@ describe("postData", () => {
   afterEach(jest.resetAllMocks);
 
   test("should fetch data", async () => {
-    const users = [{ name: "Bob" }];
+    const users = [
+      {
+        username: "mortysmith",
+        email: "ricksanchez@test.com",
+      },
+    ];
     const resp = { data: users };
     USuiteApi.post.mockResolvedValue(resp);
 
