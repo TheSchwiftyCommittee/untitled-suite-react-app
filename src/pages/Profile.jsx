@@ -82,13 +82,16 @@ const Profile = () => {
       },
     };
     const data = await getData("/profiles", config);
-    // console.log(data);
-    const profileAvatar = await fetch(data.avatar);
-    const blob = await profileAvatar.blob();
-    const file = new File([blob], `${localStorage.getItem("username")}.jpg`, {
-      type: blob.type,
-    });
-    console.log(file);
+    console.log(data);
+    // const profileAvatar = await fetch(data.avatar);
+    // console.log(profileAvatar);
+    // const blob = await profileAvatar.blob();
+    // console.log(blob)
+    // const file = new File([blob], `${localStorage.getItem("username")}.jpg`, {
+    //   type: blob.type,
+    // });
+    // console.log(file);
+    // console.log(URL.createObjectURL(file))
 
     setValues({
       ...values,
@@ -96,7 +99,7 @@ const Profile = () => {
       email: localStorage.getItem("email"),
       first_name: data.profile.first_name,
       last_name: data.profile.last_name,
-      avatar: file,
+      // avatar: file,
       profile_id: data.profile.id,
     });
   };
@@ -110,13 +113,13 @@ const Profile = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const onImageChange = (prop) => (event) => {
-    setValues({
-      ...values,
-      [prop]: event.target.files[0],
-    });
-    // console.log(event.target.files[0])
-  };
+  // const onImageChange = (prop) => (event) => {
+  //   setValues({
+  //     ...values,
+  //     [prop]: event.target.files[0],
+  //   });
+  //   // console.log(event.target.files[0])
+  // };
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -130,7 +133,7 @@ const Profile = () => {
     formData.append("email", values.email);
     formData.append("first_name", values.first_name);
     formData.append("last_name", values.last_name);
-    formData.append("avatar", values.avatar, values.avatar.name);
+    // formData.append("avatar", values.avatar, values.avatar.name);
 
     try {
       const data = await putData(`/profiles/${values.profile_id}`, formData);
@@ -223,7 +226,7 @@ const Profile = () => {
             </FormControl>
           </Grid>
           <Divider />
-          <Grid item>
+          {/* <Grid item>
             <FormControl
               className={clsx(classes.margin, classes.textField)}
               variant="filled"
@@ -246,7 +249,7 @@ const Profile = () => {
                 onChange={onImageChange("avatar")}
               />
             </FormControl>
-          </Grid>
+          </Grid> */}
           <Grid item>
             <FormControl
               className={clsx(classes.margin, classes.textField)}
