@@ -50,8 +50,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 const CreateProfile = () => {
   const [createProfileErrors, setCreateProfileErrors] = useState("");
   const [loading, setLoading] = useState(false);
@@ -66,19 +64,22 @@ const CreateProfile = () => {
 
   const getAvatar = async () => {
     try {
-      const data = await fetch("http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png");
+      const data = await fetch(
+        "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
+      );
       const blob = await data.blob();
-      const file = new File([blob], 'Placeholder.jpg', {type: blob.type});
-      console.log(file); 
+      const file = new File([blob], "Placeholder.jpg", { type: blob.type });
+      console.log(file);
       setValues({ ...values, avatar: file });
     } catch (err) {
       console.error(err.name, err.message);
     }
-  }
-  
+  };
+
   useEffect(() => {
-    getAvatar()
-  }, [])
+    getAvatar();
+    // eslint-disable-next-line
+  }, []);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -136,7 +137,11 @@ const CreateProfile = () => {
             >
               <label htmlFor="image">Avatar Image</label>
               <img
-                src={values.avatar ? URL.createObjectURL(values.avatar) : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png" }
+                src={
+                  values.avatar
+                    ? URL.createObjectURL(values.avatar)
+                    : "http://res.cloudinary.com/dw6yvkydp/image/upload/v1628677146/g8ommuwe8ml02wrgnut1dcpzulxp.png"
+                }
                 alt={values.avatar ? values.avatar.name : "default image"}
               />
               <input

@@ -74,6 +74,7 @@ const Users = (props) => {
 
   useEffect(() => {
     getUsers();
+    // eslint-disable-next-line
   }, []);
 
   const { TblContainer, TblHead, TblPagination, usersAfterSortingAndPaging } =
