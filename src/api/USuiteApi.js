@@ -14,6 +14,7 @@ const USuiteApi = axios.create({
   baseURL: apiUrl,
   headers: {
     "content-type": "application/json",
+    withCredentials: true,
   },
 });
 
