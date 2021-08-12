@@ -108,7 +108,7 @@ export const SignIn = (props) => {
       }, 1000);
       
     } catch (error) {
-      setLoginErrors(error.message)
+      setLoginErrors("Invalid Username or Password")
       setLoading(false)
     }
   }

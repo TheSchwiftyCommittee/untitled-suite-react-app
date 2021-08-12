@@ -93,7 +93,9 @@ export const UpdateList = ({listId, setOpenPopup}) => {
 
     try {
       const data = await putData(`/lists/${listId}`, formData)
+      console.log("this is FormData: ", formData)
       console.log(data)
+      history.push("/");
       history.push("/tasker");
     } catch (error) {
       setUpdateErrors(error.message);

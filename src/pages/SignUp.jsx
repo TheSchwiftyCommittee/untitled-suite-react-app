@@ -105,7 +105,7 @@ export const SignUp = (props) => {
         history.push("/profile/new");
       }, 1000);
     } catch (error) {
-      setRegistrationErrors(error.message);
+      setRegistrationErrors("Invalid username or email");
       // console.log(error.response)
       setLoading(false);
     }
