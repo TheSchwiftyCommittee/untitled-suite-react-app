@@ -65,8 +65,8 @@ export default function useTable(users, headCells, filterFn) {
       rowsPerPageOptions={pages}
       rowsPerPage={rowsPerPage}
       count={users.length}
-      onChangePage={handleChangePage}
-      onChangeRowsPerPage={handleChangeRowsPerPage}
+      onPageChange={handleChangePage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
     />
   );
 
