@@ -54,8 +54,30 @@ Enjoy!
 
 ### **Integration/E2E Testing - Cypress**
 
-1. For Integration/E2E Testing files, these files are located within the `/cypress` folder as show below: 
+1. For Integration/E2E Testing files, these files are located within the `/cypress` folder as show below:
 
 ![Untitled-Suite's Integration Testing Location](./public/cypress.png)
 
-1. Similar to the unit tests, once all the packages are installed using `yarn install --check-files`, within the same terminal, run the following command `yarn cypress:open` from the root directory of your cloned project.
+1. Similar to the unit tests, once all the packages are installed using `yarn install --check-files`, run the client using `yarn start`.
+1. In a different terminal, run the following command `yarn cypress:open` from the root directory of your cloned project to run cypress. The following menu will pop up:
+
+![Untitled-Suite's Integration Testing Menu](./public/cypress_menu.png)
+
+1. Once completed, click on the button `Run integration specs` on the top right of the pop up.
+1. You will be taken to a virtual Chrome browser and show the following results:
+
+![Untitled-Suite's Integration Testing Results](./public/cypress_tests_results.png)
+
+## **Live Visuals of Untitled Suite**
+
+### **Create Profile Page:**
+
+![Untitled-Suite's Create Profile Page](./public/Selection_236.png)
+
+### **Update Task Page:**
+
+![Untitled-Suite's Update Task Page](./public/Selection_236.png)
+
+### **Users Page: (Admin Dashboard)**
+
+![Untitled-Suite's Admin Dashboard Page](./public/Selection_236.png)
