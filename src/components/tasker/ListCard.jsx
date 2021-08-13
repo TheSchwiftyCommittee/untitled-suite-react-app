@@ -58,6 +58,7 @@ export const ListCard = (props) => {
       console.log(data);
       setAnchorEl(null);
       setTimeout(() => {
+        history.push('/');
         history.push('/tasker');
       }, 10);
     } catch (error) {

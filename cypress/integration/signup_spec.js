@@ -1,7 +1,7 @@
 describe("user signup", () => {
   beforeEach(() => {
     //navigate to the sign up page
-    cy.visit("http://localhost:3000/signup");
+    cy.visit("http://localhost:3000/#/signup");
   });
 
   it("creates a new user and profile", () => {
@@ -14,7 +14,7 @@ describe("user signup", () => {
     //click the sign up button
     cy.get('button[id="filled-adornment-signupbutton"]').click();
     // expect a redirect to the profile page
-    cy.url().should("eq", "http://localhost:3000/profile/new");
+    cy.url().should("eq", "http://localhost:3000/#/profile/new");
   });
 
   it("requires a username", () => {
@@ -27,6 +27,6 @@ describe("user signup", () => {
     //click the sign up button
     cy.get('button[id="filled-adornment-signupbutton"]').click();
     // expect a redirect to the profile page
-    cy.url().should("eq", "http://localhost:3000/signup");
+    cy.url().should("eq", "http://localhost:3000/#/signup");
   });
 });
