@@ -45,7 +45,7 @@ Enjoy!
 
 ### **Unit Testing - JEST and React-Testing-Library**
 
-1. Unit testing files are located within the same folders as the files they are testing (ie. `App.test.js` is located in the same folder as `App.js`). 
+1. Unit testing files are located within the same folders as the files they are testing (ie. `App.test.js` is located in the same folder as `App.js`).
 1. Using `yarn install --check-files` as instructed above, all packages required for the application listed in the `package.json` file will be installed.
 1. Within the same terminal, run the following command `yarn test` from the root directory of your cloned project. Note: `yarn test:coverage` can also be run to retrieve the test coverage results.
 1. The terminal will then display the following in your terminal:
