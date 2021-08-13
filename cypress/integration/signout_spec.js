@@ -1,7 +1,7 @@
 describe("Signed In User", () => {
   beforeEach(() => {
     //navigate to the sign in page
-    cy.visit("http://localhost:3000/signin");
+    cy.visit("http://localhost:3000/#/signin");
   });
 
   it("signs outs", () => {
@@ -12,11 +12,11 @@ describe("Signed In User", () => {
     //click the sign in button
     cy.get('button[id="filled-adornment-signinbutton"]').click();
     // expect a redirect to the tasker page
-    cy.url().should("eq", "http://localhost:3000/tasker");
+    cy.url().should("eq", "http://localhost:3000/#/tasker");
 
     // select signout button
     cy.get('a[id="filled-adornment-signoutbutton"]').click();
     // expect a redirect to the home page
-    cy.url().should("eq", "http://localhost:3000/");
+    cy.url().should("eq", "http://localhost:3000/#/");
   });
 });
