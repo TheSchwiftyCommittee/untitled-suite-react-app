@@ -76,8 +76,8 @@ Enjoy!
 
 ### **Update Task Page:**
 
-![Untitled-Suite's Update Task Page](./public/Selection_236.png)
+![Untitled-Suite's Update Task Page](./public/Selection_244.png)
 
 ### **Users Page: (Admin Dashboard)**
 
-![Untitled-Suite's Admin Dashboard Page](./public/Selection_236.png)
+![Untitled-Suite's Admin Dashboard Page](./public/Selection_260.png)
